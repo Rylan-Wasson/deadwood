@@ -1,0 +1,6 @@
+/**
+ * Textcontroller
+ */
+public class TextController {
+    
+}
