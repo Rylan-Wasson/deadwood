@@ -1,7 +1,7 @@
 public class TurnManager {
-    private Boolean turnActive;
-    private Boolean hasMoved;
-    private Player activePlayer;
+    private Boolean turn_active;
+    private Boolean has_moved;
+    private Player active_player;
 
     public void conductTurn(Player player){
 
@@ -12,7 +12,7 @@ public class TurnManager {
     }
 
     private void takeRoleAction(){
-        
+
     }
 
     private void actRoleAction(){
