@@ -5,12 +5,12 @@ public class Player {
     private int cash;
     private int credits;
     private Role player_role;
-    private Set player_location;
+    private Location player_location;
 
 
     // ----- constructor -----
 
-    public Player(int player_id, int rank, int rehearse_chips, int cash, int credits, Set set){
+    public Player(int player_id, int rank, int rehearse_chips, int cash, int credits, Location location){
 
     }
 
@@ -26,7 +26,7 @@ public class Player {
         return credits;
     }
 
-    public Set getPlayer_location() {
+    public Location getPlayer_location() {
         return player_location;
     }
 

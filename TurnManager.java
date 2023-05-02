@@ -5,7 +5,7 @@ public class TurnManager {
     private TextController controller;
 
     public TurnManager(TextController controller){
-
+        
     }
     
     public void conductTurn(Player player){
