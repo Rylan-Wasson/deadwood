@@ -31,4 +31,8 @@ public class GameManager {
     private void playDay(){
 
     }
+    
+    private int[] rollXDice(){
+        return null;
+    }
 }
