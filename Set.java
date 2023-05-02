@@ -13,8 +13,6 @@ public class Set extends Location {
 
     // -----Accessors-----
 
-    
-
     public int getShotCounters(){
         return shot_counters;
     }
