@@ -2,11 +2,13 @@ import java.util.ArrayList;
 
 public class Set extends Location {
     private int shot_counters;
+    private int max_shot_counters;
     private Scene set_scene;
 
-    public Set(String name, ArrayList<Location> nearby_locations, int shot_counters, Scene set_scene){
+    public Set(String name, ArrayList<Location> nearby_locations, int shot_counters, int max_shot_counters, Scene set_scene){
         super(name, nearby_locations);
         this.shot_counters = shot_counters;
+        this.max_shot_counters = max_shot_counters;
         this.set_scene = set_scene;
     }
 
