@@ -2,18 +2,18 @@ import java.util.ArrayList;
 
 public class Location {
     protected String name;
-    protected ArrayList<Location> nearby_locations;
+    protected ArrayList<Location> adjacent_locations;
 
 
-    public Location(String name, ArrayList<Location> locations){
+    public Location(String name, ArrayList<Location> adjacent_locations){
         this.name = name;
-        this.nearby_locations = locations;
+        this.adjacent_locations = adjacent_locations;
     }
     public String getName(){
         return name;
     }
 
-    public ArrayList<Location> getNearbyLocations(){
-        return nearby_locations;
+    public ArrayList<Location> getAdjacentLocations(){
+        return adjacent_locations;
     }
 }

@@ -1,9 +1,11 @@
 import java.util.LinkedList;
+import java.util.Random;
 
 public class GameManager {
     private int num_days;
     private int num_players;
     private LinkedList<Player> players;
+    private final int dice_sides = 6;
 
     //Getters
     public int getNumDays(){
@@ -32,7 +34,18 @@ public class GameManager {
 
     }
     
-    private int[] rollXDice(){
-        return null;
+    /*
+     * Rolls X dice and returns an int[] of the generate rolls 
+     */
+    public int[] rollXDice(int num_dice){
+        Random randomInt = new Random();
+        int[] dice_outcomes = new int[num_dice];
+        //upper bound is exclusive, offset is added to accurately represent a dice roll
+        int offset = 1;
+
+        for(int i = 0; i < num_dice; i++){
+            dice_outcomes[i] = (randomInt.nextInt(dice_sides) + offset);
+        }
+        return dice_outcomes;
     }
 }
