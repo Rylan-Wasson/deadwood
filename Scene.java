@@ -1,28 +1,42 @@
+import java.util.ArrayList;
+
 public class Scene {
 
     private String name;
-    private int shot_count;
+    private String line;
     private int budget;
+    private int scene_num;
+    private ArrayList<Role> roles;
 
-    public Scene(String name, int shot_count, int budget){
+    public Scene(String name, String line, int budget, int scene_num){
         this.name = name;
-        this.shot_count = shot_count;
+        this.line = line;
         this.budget = budget;
+        this.scene_num = scene_num;
     }
 
     public String getName(){
         return this.name;
     }
 
-    public int getShotCount(){
-        return this.shot_count;
+    public String getLine(){
+        return this.line;
     }
 
     public int getBudget(){
         return this.budget;
     }
 
-    public void setShotCount(int newCount){
-        this.shot_count = newCount;
+    public ArrayList<Role> getRoles(){
+        return this.roles;
     }
+
+    public int getSceneNum(){
+        return this.scene_num;
+    }
+    public void setRoles(ArrayList<Role> roles){
+        this.roles = roles;
+    }
+
+    
 }

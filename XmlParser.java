@@ -14,7 +14,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 public class XmlParser {
     final String board_pathname = "./board.xml";
-    final String cards_pathname = "./card.xml";
+    final String cards_pathname = "./cards.xml";
 
     public ArrayList<Location> parseBoardXML(){
         ArrayList<Location> locations = new ArrayList<Location>();
@@ -33,7 +33,6 @@ public class XmlParser {
 
                 Node cur_set_node = set_nodes.item(i);
                 String name = cur_set_node.getAttributes().getNamedItem("name").getNodeValue(); //grab set name
-
 
                 /* parse through all set children */
                 NodeList children = cur_set_node.getChildNodes();
@@ -93,7 +92,6 @@ public class XmlParser {
                             break;
                     }
                 } // set children 
-                //System.out.println(name+" "+adjacent_locations+" "+max_shot_counters); 
                 Set set = new Set(name, adjacent_locations, max_shot_counters, max_shot_counters);
                 locations.add(set);
             } // sets
@@ -105,7 +103,7 @@ public class XmlParser {
                 ArrayList<String> adjacent_locations = new ArrayList<String>();
                 Node cur_trailer_node = trailer_nodes.item(i);
                 NodeList trailer_children = cur_trailer_node.getChildNodes();
-                String name = "trailer";
+                String name = "Trailer";
                 /* Iterate through trailer children */
                 for(int j = 0; j < trailer_children.getLength(); j++){ 
                     Node sub = trailer_children.item(j);
@@ -129,12 +127,42 @@ public class XmlParser {
             NodeList offices = document.getElementsByTagName("office");
             if(offices.getLength()>0){
                 Node office = offices.item(0);
-                String name = "office";
-                //WIP
-            }
-
-
-
+                String name = "Office";
+                ArrayList<String> adjacent_locations = new ArrayList<String>();
+                ArrayList<Upgrade> upgrades = new ArrayList<Upgrade>();
+                NodeList office_children = office.getChildNodes();
+                /* Iterate through office children */
+                for(int i = 0; i < office_children.getLength(); i++){
+                    Node sub = office_children.item(i);
+                    if(sub.getNodeName().equals("neighbors")){
+                        NodeList neighbors = sub.getChildNodes();
+                        /* Iterate through office neighbors */
+                        for(int j = 0; j < neighbors.getLength(); j++){
+                            Node neighbor = neighbors.item(j);
+                            if(neighbor.getNodeName().equals("neighbor")){
+                                String n_name = neighbor.getAttributes().getNamedItem("name").getNodeValue();
+                                adjacent_locations.add(n_name);
+                            }
+                        } // office neighbors
+                    } else if(sub.getNodeName().equals("upgrades")){
+                        NodeList upgrade_nodes = sub.getChildNodes();
+                        /* Iterate through upgrades */
+                        for(int j = 0; j < upgrade_nodes.getLength(); j++){
+                            Node upgrade_node = upgrade_nodes.item(j);
+                            if(upgrade_node.getNodeName().equals("upgrade")){
+                                Element upgrade_element = (Element) upgrade_node;
+                                int level = Integer.parseInt(upgrade_element.getAttribute("level"));
+                                int ammount = Integer.parseInt(upgrade_element.getAttribute("amt"));
+                                String currency = upgrade_element.getAttribute("currency");
+                                Upgrade upgrade = new Upgrade(level, ammount, currency);
+                                upgrades.add(upgrade);
+                            }
+                        } // upgrades   
+                    }
+                } // office children
+                CastingOffice casting_office = new CastingOffice(name, adjacent_locations, upgrades);
+                locations.add(casting_office);
+            } // office
             return locations;
 
         } catch (Exception e) {
@@ -143,6 +171,60 @@ public class XmlParser {
         
         return null;
     }
+
+    public ArrayList<Scene> parseCardsXML(){
+        ArrayList<Scene> scenes = new ArrayList<Scene>();
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        
+        try {
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document document = db.parse(new File(cards_pathname));
+            NodeList card_nodes = document.getElementsByTagName("card");
+            /* Iterate through cards */
+            for(int i = 0; i < card_nodes.getLength(); i++){
+                Scene scene = null;
+                Node card = card_nodes.item(i);
+                String name = card.getAttributes().getNamedItem("name").getNodeValue();
+                int budget = Integer.parseInt(card.getAttributes().getNamedItem("budget").getNodeValue());
+                ArrayList<Role> roles = new ArrayList<Role>();
+                
+                NodeList card_children = card.getChildNodes();
+                /* Iterate through card children */
+                for(int j = 0; j < card_children.getLength(); j++){
+                    
+                    Node sub = card_children.item(j);
+                    switch (sub.getNodeName()) {
+                        case "scene":
+                            Element scene_element = (Element) sub;
+                            int s_num = Integer.parseInt(scene_element.getAttribute("number"));
+                            String s_line = scene_element.getTextContent();
+                            scene = new Scene(name, s_line, budget, s_num);
+                            break;
+                        case "part":
+                            Element part_element = (Element) sub;
+                            String p_name = part_element.getAttribute("name");
+                            int p_level = Integer.parseInt(part_element.getAttribute("level"));
+                            String p_line = part_element.getElementsByTagName("line").item(0).getTextContent();
+                            MainRole main_role = new MainRole(p_name, p_line, p_level);
+                            roles.add(main_role);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                if(scene != null){
+                    scene.setRoles(roles);
+                    scenes.add(scene);
+                }
+                
+            } // cards
+            return scenes;
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        
+        return null;
+    }   
 
     
 }

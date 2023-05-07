@@ -3,7 +3,6 @@ public class ExtraRole extends Role{
 
     public ExtraRole(String name, String description, int rank){
         super(name, description, rank);
-        this.set = set;
     }
 
     public Set getSet(){
