@@ -6,6 +6,8 @@ public class GameManager {
     private int num_players;
     private LinkedList<Player> players = new LinkedList<>();
     private final int dice_sides = 6;
+    private XmlParser xmlParser;
+    private GameBoard gameBoard;
 
     //Getters
     public int getNumDays(){
@@ -29,15 +31,24 @@ public class GameManager {
         this.num_players = num_players;
     }
 
-    //Util functions
-    private void playDay(){
+    /*
+     * UTIL FUNCTIONS
+     */
 
+    /*
+     * playDay()
+     */
+    private int playDay(int starting_player_id){
+        return -1;
     }
 
     /*
+     * setupGame()
      * Sets up the game, utilizes the TextController to recieve input
+     * returns the id of the starting player
      */
-    public void setupGame(){
+    public int setupGame(){
+        int starting_player_id;
         TextController textController = new TextController();
         setNumPlayers(textController.getPlayerCount());
 
@@ -46,19 +57,19 @@ public class GameManager {
             Player new_player = null;
             switch(num_players){
                 case 5:
-                    new_player = new Player(i, 1, 0, 0, 2, "Trailers");
+                    new_player = new Player(i, 1, 0, 0, 2, null);
                     break;
                 case 6:
-                    new_player = new Player(i, 1, 0, 0, 4, "Trailers");
+                    new_player = new Player(i, 1, 0, 0, 4, null);
                     break;
                 case 7:
-                    new_player = new Player(i, 2, 0, 0, 0, "Trailers");
+                    new_player = new Player(i, 2, 0, 0, 0, null);
                     break;
                 case 8:
-                    new_player = new Player(i, 2, 0, 0, 0, "Trailers");
+                    new_player = new Player(i, 2, 0, 0, 0, null);
                     break;
                 default:
-                    new_player = new Player(i, 1, 0, 0, 0, "Trailers");
+                    new_player = new Player(i, 1, 0, 0, 0, null);
                     break;
             }
             this.players.add(new_player);
@@ -77,19 +88,15 @@ public class GameManager {
                 break;
         }
 
-        //tests
-        System.out.println("PlayerCount: " + num_players);
-        System.out.println("Days: " + num_days);
-        for(int i = 0; i < num_players; i++){
-            Player curPlayer = players.get(i);
-            System.out.println("id: " + curPlayer.getPlayer_id());
-            System.out.println("rank: " + curPlayer.getRank());
-            System.out.println("location: " + curPlayer.getPlayer_location_name());
-            System.out.println("credits: " + curPlayer.getCredits());
-            System.out.println("cash: " + curPlayer.getCash());
-            System.out.println("chips: " + curPlayer.getRehearse_chips());
-            System.out.println("--------------------------------");
-        }
+        //Xml parsing and board setup
+        this.xmlParser = new XmlParser();
+        this.gameBoard = new GameBoard(xmlParser.parseBoardXML());
+        //TODO: uncomment when implemented-> gameBoard.distributeScenes(xmlParser.parseSceneXML());
+
+        //Choosing random player
+        Random random_player_id = new Random();
+        starting_player_id = random_player_id.nextInt(num_players + 1); // exclusive upper bound
+        return starting_player_id;
     }
     
     /*
@@ -98,11 +105,9 @@ public class GameManager {
     public int[] rollXDice(int num_dice){
         Random randomInt = new Random();
         int[] dice_outcomes = new int[num_dice];
-        //upper bound is exclusive, offset is added to accurately represent a dice roll
-        int offset = 1;
 
         for(int i = 0; i < num_dice; i++){
-            dice_outcomes[i] = (randomInt.nextInt(dice_sides) + offset);
+            dice_outcomes[i] = (randomInt.nextInt(dice_sides) + 1); //exclusive upper bound
         }
         return dice_outcomes;
     }
