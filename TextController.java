@@ -1,49 +1,53 @@
 import java.util.Scanner;
 
 public class TextController {
-    private Scanner input_scanner = new Scanner(System.in);
+    
     private TextView textView = new TextView();
+    private Scanner sc; //TODO: SCANNER NOT CLOSED, INFINITE LOOP BUG?
 
     /*
      * Reads and returns a string from standard input
      */
     private String readStrings(){
-        String input_string = "";
         try {
-            input_string = input_scanner.nextLine();
+            sc = new Scanner(System.in);
+            String input;
+            input = sc.nextLine();
+            return input;
         } catch (Exception e) {
-            textView.invalidInput();
+            return null;
         }
-        return input_string;
     }
 
     /*
      * Reads and returns an integer from standard input
      */
     private int readInt(){
-        int input_int = -1;
-
         try {
-            input_int = input_scanner.nextInt();
+            sc = new Scanner(System.in);
+            int input;
+            input = sc.nextInt();
+            return input;
         } catch (Exception e) {
-            textView.invalidInput();
+            return -1;
         }
-        return input_int;
     }
 
     /*
      * Displays deadwood greeting and prompts user for player count
      */
     public int getPlayerCount(){
-        boolean flag = true;
+        boolean flag = false;
         textView.displayGreeting();
+        textView.displayPlayerCount();
         int player_count = -1;
 
-        while(flag){
+        while(!flag){
             textView.displayPlayerCount();
             player_count = readInt();
+
             if(player_count >= 2 && player_count <= 8){
-                flag = false;
+                flag = true;
             } else {
                 textView.invalidInput();
             }
