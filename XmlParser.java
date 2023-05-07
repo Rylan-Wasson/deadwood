@@ -1,5 +1,7 @@
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.jar.Attributes.Name;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -21,9 +23,9 @@ public class XmlParser {
         try {
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document document = db.parse(new File(board_pathname));
-            NodeList set_nodes = document.getElementsByTagName("set");
             
-            //parse sets
+            NodeList set_nodes = document.getElementsByTagName("set");
+            /* parse through sets */
             for(int i = 0; i < set_nodes.getLength(); i++){
                 ArrayList<String> adjacent_locations = new ArrayList<String>();
                 ArrayList<Role> extra_roles = new ArrayList<Role>();
@@ -33,7 +35,7 @@ public class XmlParser {
                 String name = cur_set_node.getAttributes().getNamedItem("name").getNodeValue(); //grab set name
 
 
-                //grab children values
+                /* parse through all set children */
                 NodeList children = cur_set_node.getChildNodes();
                 for(int j = 0; j < children.getLength(); j++){
                     
@@ -90,13 +92,49 @@ public class XmlParser {
                         default:
                             break;
                     }
-                }
-                System.out.println(name+" "+adjacent_locations+" "+max_shot_counters);
+                } // set children 
+                //System.out.println(name+" "+adjacent_locations+" "+max_shot_counters); 
                 Set set = new Set(name, adjacent_locations, max_shot_counters, max_shot_counters);
                 locations.add(set);
+            } // sets
+
+
+            NodeList trailer_nodes = document.getElementsByTagName("trailer");
+            /* Iterate through trailers */
+            for(int i = 0; i < trailer_nodes.getLength(); i++){
+                ArrayList<String> adjacent_locations = new ArrayList<String>();
+                Node cur_trailer_node = trailer_nodes.item(i);
+                NodeList trailer_children = cur_trailer_node.getChildNodes();
+                String name = "trailer";
+                /* Iterate through trailer children */
+                for(int j = 0; j < trailer_children.getLength(); j++){ 
+                    Node sub = trailer_children.item(j);
+                    if(sub.getNodeName().equals("neighbors")){
+                        NodeList neighbors = sub.getChildNodes();
+                        /* Iterate through neighbors */
+                        for(int x = 0; x < neighbors.getLength(); x++){
+                            Node neighbor = neighbors.item(x);
+                            if(neighbor.getNodeName().equals("neighbor")){
+                                String n_name = neighbor.getAttributes().getNamedItem("name").getNodeValue();
+                                adjacent_locations.add(n_name);
+                            }
+                        }
+                    }
+                } // trailer children
+                Location trailer = new Location(name, adjacent_locations);
+                locations.add(trailer);
+            } // trailers
+
+            /* Office */
+            NodeList offices = document.getElementsByTagName("office");
+            if(offices.getLength()>0){
+                Node office = offices.item(0);
+                String name = "office";
+                //WIP
             }
 
-            
+
+
             return locations;
 
         } catch (Exception e) {
