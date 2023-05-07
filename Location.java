@@ -2,10 +2,10 @@ import java.util.ArrayList;
 
 public class Location {
     protected String name;
-    protected ArrayList<Location> adjacent_locations;
+    protected ArrayList<String> adjacent_locations;
 
 
-    public Location(String name, ArrayList<Location> adjacent_locations){
+    public Location(String name, ArrayList<String> adjacent_locations){
         this.name = name;
         this.adjacent_locations = adjacent_locations;
     }
@@ -13,7 +13,7 @@ public class Location {
         return name;
     }
 
-    public ArrayList<Location> getAdjacentLocations(){
+    public ArrayList<String> getAdjacentLocations(){
         return adjacent_locations;
     }
 }

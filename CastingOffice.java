@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class CastingOffice extends Location {
-    public CastingOffice(String name, ArrayList<Location> nearby_locations){
+    public CastingOffice(String name, ArrayList<String> nearby_locations){
         super(name, nearby_locations);
     }
     
