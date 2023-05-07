@@ -14,6 +14,6 @@ public class GameBoard {
     }
 
     public void distributeScenes(ArrayList<Scene> scenes){
-
+        
     }
 }
