@@ -82,7 +82,7 @@ public class XmlParser {
                                         Element line_element = (Element) line_nodes.item(0);
                                         line = line_element.getTextContent();
                                     }
-                                    Role role = new ExtraRole(p_name, line, level);
+                                    Role role = new Role(p_name, line, level, false);
                                     extra_roles.add(role);
                                 }
                                 
@@ -205,7 +205,7 @@ public class XmlParser {
                             String p_name = part_element.getAttribute("name");
                             int p_level = Integer.parseInt(part_element.getAttribute("level"));
                             String p_line = part_element.getElementsByTagName("line").item(0).getTextContent();
-                            MainRole main_role = new MainRole(p_name, p_line, p_level);
+                            Role main_role = new Role(p_name, p_line, p_level, true);
                             roles.add(main_role);
                             break;
                         default:

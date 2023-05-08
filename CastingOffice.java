@@ -9,6 +9,6 @@ public class CastingOffice extends Location {
     }
     
     public void upgradePlayer(Player player){
-
+        
     }
 }
