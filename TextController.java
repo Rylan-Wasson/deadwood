@@ -33,28 +33,6 @@ public class TextController {
         }
     }
 
-    /*
-     * Displays deadwood greeting and prompts user for player count
-     */
-    public int getPlayerCount(){
-        boolean flag = false;
-        textView.displayGreeting();
-        textView.displayPlayerCount();
-        int player_count = -1;
-
-        while(!flag){
-            textView.displayPlayerCount();
-            player_count = readInt();
-
-            if(player_count >= 2 && player_count <= 8){
-                flag = true;
-            } else {
-                textView.invalidInput();
-            }
-        }
-        return player_count;
-    }
-
     public String getAction(){
         return null;
     }

@@ -47,10 +47,9 @@ public class GameManager {
      * Sets up the game, utilizes the TextController to recieve input
      * returns the id of the starting player
      */
-    public int setupGame(){
+    public int setupGame(int num_players){
         int starting_player_id;
-        TextController textController = new TextController();
-        setNumPlayers(textController.getPlayerCount());
+        setNumPlayers(num_players);
 
         // Creates all the players based on player count, adds them to the players LinkedList
         for(int i = 1; i <= num_players; i++){
@@ -73,6 +72,7 @@ public class GameManager {
                     break;
             }
             this.players.add(new_player);
+            System.out.println("Player ID: " + new_player.getPlayer_id());
         }
 
         //Sets the day cap based on player count
