@@ -35,6 +35,17 @@ public class GameManager {
      * UTIL FUNCTIONS
      */
 
+     public void playGame(int num_players){
+        int starting_player_id = setupGame(num_players);
+        boolean end_game = false;
+        TextController textController = new TextController();
+        TurnManager turnManager = new TurnManager(textController);
+        
+        while(!end_game){
+            playDay(starting_player_id);
+        }
+     }
+
     /*
      * playDay()
      */
@@ -91,7 +102,7 @@ public class GameManager {
         //Xml parsing and board setup
         this.xmlParser = new XmlParser();
         this.gameBoard = new GameBoard(xmlParser.parseBoardXML());
-        //TODO: uncomment when implemented-> gameBoard.distributeScenes(xmlParser.parseSceneXML());
+        gameBoard.distributeScenes(xmlParser.parseCardsXML());
 
         //Choosing random player
         Random random_player_id = new Random();

@@ -35,4 +35,17 @@ public class TurnManager {
     private void endTurnAction(){
 
     }
+
+    private void currentPlayerInfoAction(){
+
+    }
+
+    private void allPlayersInfoAction(){
+
+    }
+
+    private void endGameAction(){
+        
+    }
+
 }
