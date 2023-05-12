@@ -67,23 +67,23 @@ public class GameManager {
             Player new_player = null;
             switch(num_players){
                 case 5:
-                    new_player = new Player(i, 1, 0, 0, 2, null);
+                    new_player = new Player(i, 1, 0, 0, 2);
                     break;
                 case 6:
-                    new_player = new Player(i, 1, 0, 0, 4, null);
+                    new_player = new Player(i, 1, 0, 0, 4);
                     break;
                 case 7:
-                    new_player = new Player(i, 2, 0, 0, 0, null);
+                    new_player = new Player(i, 2, 0, 0, 0);
                     break;
                 case 8:
-                    new_player = new Player(i, 2, 0, 0, 0, null);
+                    new_player = new Player(i, 2, 0, 0, 0);
                     break;
                 default:
-                    new_player = new Player(i, 1, 0, 0, 0, null);
+                    new_player = new Player(i, 1, 0, 0, 0);
                     break;
             }
             this.players.add(new_player);
-            System.out.println("Player ID: " + new_player.getPlayer_id());
+            System.out.println("Player ID: " + new_player.getPlayerID());
         }
 
         //Sets the day cap based on player count

@@ -26,4 +26,13 @@ public class GameBoard {
             }
         }
     }
+    /* returns location object with locationname name, null if it dne */
+    public Location getLocationByName(String name){
+        for(int i = 0; i < locations.size(); i++){
+            if(locations.get(i).getName().equals(name)){
+                return locations.get(i);
+            }
+        }
+        return null;
+    }
 }

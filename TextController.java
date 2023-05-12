@@ -1,9 +1,14 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TextController {
     
-    private TextView textView = new TextView();
+    private TextView textView;
     private Scanner sc; //TODO: SCANNER NOT CLOSED, INFINITE LOOP BUG?
+
+    public TextController(){
+        textView = new TextView();
+    }
 
     /*
      * Reads and returns a string from standard input
@@ -31,6 +36,13 @@ public class TextController {
         } catch (Exception e) {
             return -1;
         }
+    }
+
+    public String getDesiredLocation(ArrayList<String> locations){
+        textView.listLocations(locations);
+        String selection = readStrings();
+        
+        return selection;
     }
 
     public String getAction(){

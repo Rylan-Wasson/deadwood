@@ -5,18 +5,15 @@ public class Player {
     private int cash;
     private int credits;
     private Role player_role;
-    private String location_name;
-
 
     // ----- constructor -----
 
-    public Player(int player_id, int rank, int rehearse_chips, int cash, int credits, String location_name){
+    public Player(int player_id, int rank, int rehearse_chips, int cash, int credits){
         this.player_id = player_id;
         this.rank = rank;
         this.rehearse_chips = rehearse_chips;
         this.cash = cash;
         this.credits = credits;
-        this.location_name = location_name;
     }
 
     // ----- accessors -----
@@ -29,15 +26,11 @@ public class Player {
         return credits;
     }
 
-    public String getPlayer_location_name() {
-        return location_name;
-    }
-
-    public Role getPlayer_role() {
+    public Role getPlayerRole() {
         return player_role;
     }
 
-    public int getPlayer_id() {
+    public int getPlayerID() {
         return player_id;
     }
 
@@ -45,7 +38,7 @@ public class Player {
         return rank;
     }
 
-    public int getRehearse_chips() {
+    public int getRehearseChips() {
         return rehearse_chips;
     }
     
@@ -60,11 +53,9 @@ public class Player {
         this.credits = credits;
     }
 
-    public void setPlayer_location(String location_name) {
-        this.location_name = location_name;
-    }
 
-    public void setPlayer_id(int player_id) {
+
+    public void setPlayerID(int player_id) {
         this.player_id = player_id;
     }
 
@@ -76,7 +67,7 @@ public class Player {
         this.rehearse_chips = rehearse_chips;
     }
 
-    public void setPlayer_role(Role role) {
+    public void setPlayerRole(Role role) {
         this.player_role = role;
     }
 }
