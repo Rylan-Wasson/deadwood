@@ -48,4 +48,8 @@ public class TextController {
     public String getAction(){
         return null;
     }
+
+    public void badInput(){
+        textView.printBadSelection();
+    }
 }

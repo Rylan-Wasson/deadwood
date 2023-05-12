@@ -27,8 +27,9 @@ public class TurnManager {
 
         if(new_location != null){
             lm.updateLocation(active_player.getPlayerID(), new_location);
+            has_moved = true;
         } else {
-            // invalid selection
+            controller.badInput();
         }
         
     }

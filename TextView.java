@@ -11,4 +11,8 @@ public class TextView {
             System.out.println(i + ") "+locations.get(i));
         }
     }
+
+    public void printBadSelection(){
+        System.out.println("Invalid Selection. ");
+    }
 }
