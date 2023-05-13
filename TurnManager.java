@@ -20,9 +20,40 @@ public class TurnManager {
         turn_active = true;
         has_moved = false;
         while(turn_active){
-            //get action
-            moveAction();
-            endTurnAction();
+            String action = controller.getAction();
+            switch (action) {
+                case "end turn":
+                    
+                    break;
+                case "end game":
+                    
+                    break;    
+                case "move":
+                    
+                    break;
+                case "act":
+                    
+                    break;
+                case "active player info":
+                    
+                    break;
+                case "all player info":
+                    
+                    break;
+                case "upgrade":
+                    
+                    break;
+                case "rehearse":
+                    
+                    break;
+                case "take role":
+                    
+                    break;
+
+                default:
+                    controller.badInput();
+                    break;
+            }
         }
         return end_game;
     }
