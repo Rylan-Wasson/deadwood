@@ -7,16 +7,20 @@ public class TurnManager {
     private TextController controller;
     private LocationManager lm;
 
-    public TurnManager(TextController controller){
-        
+    public TurnManager(TextController controller, LocationManager lm){
+        this.controller = controller;
+        this.lm = lm;
+        this.active_player = null;
     }
     
     public void conductTurn(Player player){
+        active_player = player;
         turn_active = true;
-        while(turn_active){
-            //get action
-
-        }
+        has_moved = false;
+        // while(turn_active){
+        //     //get action
+        // }
+        moveAction();
     }
 
     private void moveAction(){

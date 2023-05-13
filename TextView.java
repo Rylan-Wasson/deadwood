@@ -6,13 +6,13 @@ public class TextView {
     }
 
     public void listLocations(ArrayList<String> locations){
-        System.out.println("Select a location: ");
+        System.out.println("Enter a location:");
         for(int i = 0; i < locations.size(); i++){
-            System.out.println(i + ") "+locations.get(i));
+            System.out.println("> " + locations.get(i));
         }
     }
 
     public void printBadSelection(){
-        System.out.println("Invalid Selection. ");
+        System.out.println("Invalid Selection!");
     }
 }

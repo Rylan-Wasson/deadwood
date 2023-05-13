@@ -52,4 +52,8 @@ public class TextController {
     public void badInput(){
         textView.printBadSelection();
     }
+
+    public void closeScanner(){
+        sc.close();
+    }
 }

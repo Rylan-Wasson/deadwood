@@ -8,6 +8,18 @@ public class GameManager {
     private final int dice_sides = 6;
     private XmlParser xmlParser;
     private GameBoard gameBoard;
+    private TextController textController;
+    private LocationManager locationManager;
+    private TurnManager turnManager;
+
+    public GameManager(){
+        this.xmlParser = new XmlParser();
+        this.gameBoard = new GameBoard(xmlParser.parseBoardXML());
+        gameBoard.distributeScenes(xmlParser.parseCardsXML());
+        this.textController = new TextController();
+        this.locationManager = new LocationManager(gameBoard);
+        this.turnManager = new TurnManager(textController, locationManager);
+    }
 
     //Getters
     public int getNumDays(){
@@ -38,8 +50,6 @@ public class GameManager {
      public void playGame(int num_players){
         int starting_player_id = setupGame(num_players);
         boolean end_game = false;
-        TextController textController = new TextController();
-        TurnManager turnManager = new TurnManager(textController);
         
         while(!end_game){
             playDay(starting_player_id);
@@ -50,6 +60,7 @@ public class GameManager {
      * playDay()
      */
     private int playDay(int starting_player_id){
+        turnManager.conductTurn(players.get(starting_player_id - 1));
         return -1;
     }
 
@@ -59,7 +70,8 @@ public class GameManager {
      * returns the id of the starting player
      */
     public int setupGame(int num_players){
-        int starting_player_id;
+        int starting_player_id = 1;
+
         setNumPlayers(num_players);
 
         // Creates all the players based on player count, adds them to the players LinkedList
@@ -83,7 +95,6 @@ public class GameManager {
                     break;
             }
             this.players.add(new_player);
-            System.out.println("Player ID: " + new_player.getPlayerID());
         }
 
         //Sets the day cap based on player count
@@ -99,14 +110,9 @@ public class GameManager {
                 break;
         }
 
-        //Xml parsing and board setup
-        this.xmlParser = new XmlParser();
-        this.gameBoard = new GameBoard(xmlParser.parseBoardXML());
-        gameBoard.distributeScenes(xmlParser.parseCardsXML());
-
-        //Choosing random player
-        Random random_player_id = new Random();
-        starting_player_id = random_player_id.nextInt(num_players + 1); // exclusive upper bound
+        //TODO:
+        //gameBoard.printLocations();
+        locationManager.moveAllPlayers(players, gameBoard.getLocationByName("Trailer"));
         return starting_player_id;
     }
     

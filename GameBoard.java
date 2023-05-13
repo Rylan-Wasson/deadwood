@@ -22,17 +22,26 @@ public class GameBoard {
             if(location instanceof Set){
                 Set set = (Set) location;
                 set.setScene(scenes.get(i));
-                System.out.println(set.getName() + " "+ set.getScene().getName());
             }
         }
     }
     /* returns location object with locationname name, null if it dne */
     public Location getLocationByName(String name){
         for(int i = 0; i < locations.size(); i++){
-            if(locations.get(i).getName().equals(name)){
+            if(locations.get(i).getName().equalsIgnoreCase(name)){
                 return locations.get(i);
             }
         }
         return null;
+    }
+
+    //TODO: remove after testing
+    public void printLocations(){
+        for(int i = 0; i < locations.size(); i++){
+            System.out.println("Location: " + i + " " + locations.get(i).getName());
+            for(int j = 0; j < locations.get(i).getAdjacentLocations().size(); j++){
+                System.out.println("    --->ADJ Location: " + locations.get(i).getAdjacentLocations().get(j));
+            }
+        }
     }
 }
