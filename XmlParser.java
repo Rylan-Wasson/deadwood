@@ -92,7 +92,7 @@ public class XmlParser {
                             break;
                     }
                 } // set children 
-                Set set = new Set(name, adjacent_locations, max_shot_counters, max_shot_counters);
+                Set set = new Set(name, adjacent_locations, max_shot_counters, max_shot_counters, extra_roles);
                 locations.add(set);
             } // sets
 

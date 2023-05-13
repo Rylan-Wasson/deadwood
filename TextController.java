@@ -46,12 +46,63 @@ public class TextController {
     }
 
     public String getAction(){
-        return null;
+        return readStrings();
+    }
+
+    public String getRoleSelection(){
+        return readStrings();
     }
 
     public void badInput(){
         textView.printBadSelection();
     }
+
+    public void badInput(String arg){
+        switch (arg) {
+            case "working_role":
+                textView.printBadSelectionWorkingRole();
+                break;
+            case "wrong_location":
+                textView.printBadSelectionWrongLocation();
+                break;
+            case "already_moved":
+                textView.printBadSelectionAlreadyMoved();
+                break;
+            case "no_role":
+                textView.printBadSelectionNoRole();
+                break;
+            case "no_scene":
+                textView.printBadSelectionNoScene();
+                break;
+            case "role_taken":
+                textView.printBadSelectionRoleTaken();
+                break;
+            case "low_rank":
+                textView.printBadSelectionLowRank();
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void playerInfo(Player player){
+        int ID = player.getPlayerID();
+        String role;
+        if(player.getPlayerRole() != null){
+            role = player.getPlayerRole().getName();
+        } else {
+            role = "No role";
+        }
+        int cash = player.getCash();
+        int credits = player.getCredits();
+        int rehearse_chips = player.getRehearseChips();
+        textView.listPlayerInfo(ID, role, cash, credits, rehearse_chips);
+    }
+
+    public void listRoles(ArrayList<Role> main_roles, ArrayList<Role> extra_roles){
+        textView.listRoles(main_roles, extra_roles);
+    }
+
 
     public void closeScanner(){
         sc.close();

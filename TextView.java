@@ -16,6 +16,36 @@ public class TextView {
         System.out.println("Invalid Selection! Please try again.");
     }
 
+    public void printBadSelectionWorkingRole(){
+        System.out.println("Cannot do this action, you are currently working a role. Please try again.");
+    }
+
+    public void printBadSelectionWrongLocation(){
+        System.out.println("Cannot do this action, you are not at the right location. Please try again.");
+    }
+
+    public void printBadSelectionAlreadyMoved(){
+        System.out.println("Cannot do this action, you've already moved. Please try again.");
+    }
+
+    public void printBadSelectionNoRole(){
+        System.out.println("Cannot do this action, you're not currently working a role. Please try again.");
+    }
+
+    public void printBadSelectionNoScene(){
+        System.out.println("Cannot do this action, there is no scene available. Please try again.");
+    }
+
+    public void printBadSelectionRoleTaken(){
+        System.out.println("Cannot do this action, that role is already taken. Please try again.");
+    }
+
+    public void printBadSelectionLowRank(){
+        System.out.println("Cannot do this action, your rank is too low. Please try again.");
+    }
+
+
+
     public void listRoles(ArrayList<Role> main_roles, ArrayList<Role> extra_roles){
         System.out.println("Select a role: ");
         System.out.println("\n Scene Roles:");
@@ -29,7 +59,7 @@ public class TextView {
             System.out.println(" Rank: "+role.getRank());
         }
 
-        System.out.println("\n Extra Roles: ");
+        System.out.println("\n  Extra Roles: ");
         for(int i = 0; i < extra_roles.size(); i++){
             Role role = extra_roles.get(i);
             System.out.print("> "+role.getName());
@@ -37,12 +67,12 @@ public class TextView {
                 System.out.print("  (Taken)");
             }
             System.out.println();
-            System.out.println(" Rank: "+role.getRank());
+            System.out.println("   Rank: "+role.getRank());
         }
     }
 
-    public void listPlayerInfo(String name, String role, int cash, int credits, int rehearse_chips){
-        System.out.println("Player: "+name);
+    public void listPlayerInfo(int ID, String role, int cash, int credits, int rehearse_chips){
+        System.out.println("Player: "+ID);
         System.out.println("Current Role: "+role);
         System.out.println("Cash: "+cash);
         System.out.println("Credits: "+credits);
