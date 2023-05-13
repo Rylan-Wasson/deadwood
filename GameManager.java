@@ -13,6 +13,7 @@ public class GameManager {
     private TurnManager turnManager;
     private boolean end_game;
     private ArrayList<Scene> scenes;
+    private int current_player_index;
 
     public GameManager(){
         this.xmlParser = new XmlParser();
@@ -44,18 +45,22 @@ public class GameManager {
     public void setNumPlayers(int num_players){
         this.num_players = num_players;
     }
+
     /*
      * UTIL FUNCTIONS
      */
 
+    /* ENTRY POINT TO DEADWOOD
+     * playGame()
+     */
      public void playGame(int num_players){
-        int starting_player_id = setupGame(num_players);
+        setupGame(num_players);
         end_game = false;
         
         while(!end_game){
-            end_game = playDay(starting_player_id);
-            if(gameBoard.getNumActiveScenes() == 1){
-                setupDay();
+            playDay();
+            if(--num_days == 0){
+                end_game = true;
             }
         }
      }
@@ -63,9 +68,17 @@ public class GameManager {
     /*
      * playDay()
      */
-    private boolean playDay(int starting_player_id){
-        end_game = turnManager.conductTurn(players.get(starting_player_id - 1));
-        return end_game;
+    private void playDay(){
+        while(gameBoard.getNumActiveScenes() > 1 || !end_game){
+
+            end_game = turnManager.conductTurn(players.get(current_player_index));
+
+            if(current_player_index == (players.size() - 1)){
+                current_player_index = 0;
+            } else {
+                current_player_index++;
+            }
+        }
     }
 
     /*
@@ -73,8 +86,7 @@ public class GameManager {
      * Sets up the game, utilizes the TextController to recieve input
      * returns the id of the starting player
      */
-    public int setupGame(int num_players){
-        int starting_player_id = 1;
+    public void setupGame(int num_players){
 
         setNumPlayers(num_players);
 
@@ -117,8 +129,8 @@ public class GameManager {
         //sets up the day
         setupDay();
 
-        //returns the starting player id
-        return starting_player_id;
+        //Starting player
+        current_player_index = 0;
     }
 
     //Sets up a new day

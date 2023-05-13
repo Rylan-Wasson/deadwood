@@ -19,10 +19,11 @@ public class TurnManager {
         active_player = player;
         turn_active = true;
         has_moved = false;
-        // while(turn_active){
-        //     //get action
-        // }
-        moveAction();
+        while(turn_active){
+            //get action
+            moveAction();
+            endTurnAction();
+        }
         return end_game;
     }
 
