@@ -20,6 +20,7 @@ public class TurnManager {
         turn_active = true;
         has_moved = false;
         while(turn_active){
+            controller.listActions();
             String action = controller.getAction();
             switch (action) {
                 case "end turn":
@@ -117,6 +118,9 @@ public class TurnManager {
         ArrayList<Role> extra_roles = set.getExtraRoles();
         controller.listRoles(main_roles, extra_roles);
         
+        System.out.println(" -> all player info");
+        System.out.println(" -> end turn");
+        System.out.println(" -> end game");
         String role_selection = controller.getRoleSelection();
         Role role = null;
         // find if player selection is a valid role

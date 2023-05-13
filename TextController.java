@@ -87,6 +87,7 @@ public class TextController {
 
     public void playerInfo(Player player){
         int ID = player.getPlayerID();
+        int rank = player.getRank();
         String role;
         if(player.getPlayerRole() != null){
             role = player.getPlayerRole().getName();
@@ -96,11 +97,15 @@ public class TextController {
         int cash = player.getCash();
         int credits = player.getCredits();
         int rehearse_chips = player.getRehearseChips();
-        textView.listPlayerInfo(ID, role, cash, credits, rehearse_chips);
+        textView.listPlayerInfo(ID, rank, role, cash, credits, rehearse_chips);
     }
 
     public void listRoles(ArrayList<Role> main_roles, ArrayList<Role> extra_roles){
         textView.listRoles(main_roles, extra_roles);
+    }
+
+    public void listActions(){
+        textView.listActions();
     }
 
 

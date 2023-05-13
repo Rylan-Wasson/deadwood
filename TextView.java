@@ -62,7 +62,7 @@ public class TextView {
         System.out.println("\n  Extra Roles: ");
         for(int i = 0; i < extra_roles.size(); i++){
             Role role = extra_roles.get(i);
-            System.out.print("> "+role.getName());
+            System.out.print("HERE!> "+role.getName());
             if(role.isTaken()){
                 System.out.print("  (Taken)");
             }
@@ -71,11 +71,17 @@ public class TextView {
         }
     }
 
-    public void listPlayerInfo(int ID, String role, int cash, int credits, int rehearse_chips){
+    public void listPlayerInfo(int ID, int rank, String role, int cash, int credits, int rehearse_chips){
         System.out.println("Player: "+ID);
+        System.out.println("Rank: "+rank);
         System.out.println("Current Role: "+role);
         System.out.println("Cash: "+cash);
         System.out.println("Credits: "+credits);
         System.out.println("Rehearse Chips: "+rehearse_chips);
+    }
+
+    public void listActions(){
+        System.out.println("\n Actions:");
+        //System.out.println(" -> active player info\n -> all player info\n -> move\n -> act\n -> upgrade\n -> rehearse\n -> take role\n -> end turn\n -> end game\n------------");
     }
 }

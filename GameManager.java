@@ -72,7 +72,6 @@ public class GameManager {
         while(gameBoard.getNumActiveScenes() > 1 || !end_game){
 
             end_game = turnManager.conductTurn(players.get(current_player_index));
-
             if(current_player_index == (players.size() - 1)){
                 current_player_index = 0;
             } else {
