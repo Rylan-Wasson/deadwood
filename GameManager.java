@@ -1,27 +1,29 @@
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class GameManager {
     private int num_days;
     private int num_players;
-    private LinkedList<Player> players = new LinkedList<>();
+    private ArrayList<Player> players = new ArrayList<Player>();
     private final int dice_sides = 6;
     private XmlParser xmlParser;
     private GameBoard gameBoard;
     private TextController textController;
     private LocationManager locationManager;
     private TurnManager turnManager;
+    private boolean end_game;
+    private ArrayList<Scene> scenes;
 
     public GameManager(){
         this.xmlParser = new XmlParser();
         this.gameBoard = new GameBoard(xmlParser.parseBoardXML());
-        gameBoard.distributeScenes(xmlParser.parseCardsXML());
+        this.scenes = xmlParser.parseCardsXML();
         this.textController = new TextController();
         this.locationManager = new LocationManager(gameBoard);
         this.turnManager = new TurnManager(textController, locationManager);
     }
 
-    //Getters
+    //GetterslocationManager.moveAllPlayers(players, gameBoard.getLocationByName("Trailer"));
     public int getNumDays(){
         return this.num_days;
     }
@@ -30,7 +32,7 @@ public class GameManager {
         return this.num_players;
     }
 
-    public LinkedList<Player> getPlayers(){
+    public ArrayList<Player> getPlayers(){
         return this.players;
     }
 
@@ -42,26 +44,28 @@ public class GameManager {
     public void setNumPlayers(int num_players){
         this.num_players = num_players;
     }
-
     /*
      * UTIL FUNCTIONS
      */
 
      public void playGame(int num_players){
         int starting_player_id = setupGame(num_players);
-        boolean end_game = false;
+        end_game = false;
         
         while(!end_game){
-            playDay(starting_player_id);
+            end_game = playDay(starting_player_id);
+            if(gameBoard.getNumActiveScenes() == 1){
+                setupDay();
+            }
         }
      }
 
     /*
      * playDay()
      */
-    private int playDay(int starting_player_id){
-        turnManager.conductTurn(players.get(starting_player_id - 1));
-        return -1;
+    private boolean playDay(int starting_player_id){
+        end_game = turnManager.conductTurn(players.get(starting_player_id - 1));
+        return end_game;
     }
 
     /*
@@ -110,12 +114,20 @@ public class GameManager {
                 break;
         }
 
-        //TODO:
-        //gameBoard.printLocations();
-        locationManager.moveAllPlayers(players, gameBoard.getLocationByName("Trailer"));
+        //sets up the day
+        setupDay();
+
+        //returns the starting player id
         return starting_player_id;
     }
-    
+
+    //Sets up a new day
+    private void setupDay(){
+        locationManager.moveAllPlayers(players, gameBoard.getLocationByName("Trailer"));
+        gameBoard.distributeScenes(scenes);
+    }
+
+
     /*
      * Rolls X dice and returns an int[] of the generate rolls 
      */

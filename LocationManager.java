@@ -1,6 +1,5 @@
 import java.util.HashMap;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class LocationManager {
     private HashMap<Integer, Location> player_locations;
@@ -22,7 +21,7 @@ public class LocationManager {
         player_locations.put(ID, location);
     }
 
-    public void moveAllPlayers(LinkedList<Player> players, Location location){
+    public void moveAllPlayers(ArrayList<Player> players, Location location){
         for(int i = 0; i < players.size(); i++){
             player_locations.put(players.get(i).getPlayerID(), location);
         }

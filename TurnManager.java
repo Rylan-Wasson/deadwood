@@ -6,6 +6,7 @@ public class TurnManager {
     private Player active_player;
     private TextController controller;
     private LocationManager lm;
+    private boolean end_game;
 
     public TurnManager(TextController controller, LocationManager lm){
         this.controller = controller;
@@ -13,7 +14,8 @@ public class TurnManager {
         this.active_player = null;
     }
     
-    public void conductTurn(Player player){
+    public boolean conductTurn(Player player){
+        end_game = false;
         active_player = player;
         turn_active = true;
         has_moved = false;
@@ -21,6 +23,7 @@ public class TurnManager {
         //     //get action
         // }
         moveAction();
+        return end_game;
     }
 
     private void moveAction(){
@@ -55,7 +58,7 @@ public class TurnManager {
     }
 
     private void endTurnAction(){
-
+        turn_active = false;
     }
 
     private void currentPlayerInfoAction(){
@@ -67,7 +70,7 @@ public class TurnManager {
     }
 
     private void endGameAction(){
-        
+        end_game = true;
     }
 
 }
