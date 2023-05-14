@@ -72,6 +72,7 @@ public class TextView {
     }
 
     public void listPlayerInfo(int ID, int rank, String role, int cash, int credits, int rehearse_chips){
+        System.out.println("\nInfo:");
         System.out.println("Player: "+ID);
         System.out.println("Rank: "+rank);
         System.out.println("Current Role: "+role);
@@ -81,7 +82,7 @@ public class TextView {
     }
 
     public void listActions(){
-        System.out.println("\n Actions:");
-        //System.out.println(" -> active player info\n -> all player info\n -> move\n -> act\n -> upgrade\n -> rehearse\n -> take role\n -> end turn\n -> end game\n------------");
+        System.out.println("\nActions:");
+        System.out.println(" -> active player info\n -> all player info\n -> move\n -> act\n -> upgrade\n -> rehearse\n -> take role\n -> end turn\n -> end game\n------------");
     }
 }

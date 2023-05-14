@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class GameBoard {
-    private final int scene_count = 10;
     private int numActiveScenes;
     private ArrayList<Location> locations;
 
@@ -12,6 +11,10 @@ public class GameBoard {
 
     public int getNumActiveScenes(){
         return this.numActiveScenes;
+    }
+
+    public void setNumScenes(int numScenes){
+        numActiveScenes = numScenes;
     }
 
     public void distributeScenes(ArrayList<Scene> scenes){
@@ -24,6 +27,7 @@ public class GameBoard {
                 set.setScene(scenes.get(i));
             }
         }
+        numActiveScenes = 10;
     }
     /* returns location object with locationname name, null if it dne */
     public Location getLocationByName(String name){

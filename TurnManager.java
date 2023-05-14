@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Random;
 
 public class TurnManager {
     private Boolean turn_active;
@@ -7,11 +10,13 @@ public class TurnManager {
     private TextController controller;
     private LocationManager lm;
     private boolean end_game;
+    private Banker banker;
 
     public TurnManager(TextController controller, LocationManager lm){
         this.controller = controller;
         this.lm = lm;
         this.active_player = null;
+        banker = new Banker();
     }
     
     public boolean conductTurn(Player player){
@@ -19,7 +24,7 @@ public class TurnManager {
         active_player = player;
         turn_active = true;
         has_moved = false;
-        while(turn_active){
+        while(turn_active && !end_game){
             controller.listActions();
             String action = controller.getAction();
             switch (action) {
@@ -27,7 +32,6 @@ public class TurnManager {
                     endTurnAction();
                     break;
                 case "end game": //ends the current turn and the game
-                    endTurnAction();
                     endGameAction();
                     break;    
                 case "move":
@@ -105,8 +109,12 @@ public class TurnManager {
         Location new_location = lm.getLocationByName(selection);
 
         if(new_location != null){
-            lm.updateLocation(active_player.getPlayerID(), new_location);
-            has_moved = true;
+            if(adjacent_locations.contains(new_location.getName())){ //ensures the desired location is adjacent
+                lm.updateLocation(active_player.getPlayerID(), new_location);
+                has_moved = true;
+            } else {
+                controller.badInput();
+            }
         } else {
             controller.badInput();
         }
@@ -117,10 +125,6 @@ public class TurnManager {
         ArrayList<Role> main_roles = set.getScene().getRoles();
         ArrayList<Role> extra_roles = set.getExtraRoles();
         controller.listRoles(main_roles, extra_roles);
-        
-        System.out.println(" -> all player info");
-        System.out.println(" -> end turn");
-        System.out.println(" -> end game");
         String role_selection = controller.getRoleSelection();
         Role role = null;
         // find if player selection is a valid role
@@ -153,7 +157,46 @@ public class TurnManager {
     }
 
     private void actRoleAction(){
-        System.out.println("--act");
+        Random player_roll = new Random();
+        int roll_result = (player_roll.nextInt(6) + 1);
+        Set set = (Set) lm.getLocationByID(active_player.getPlayerID());
+        int budget = set.getScene().getBudget();
+
+        if((roll_result + active_player.getRehearseChips()) >= budget){ //successful roll
+
+            System.out.println("\nSuccessful roll!");
+
+            set.setShotCounters(set.getShotCounters() - 1);
+
+            if(active_player.getPlayerRole().getIsMainRole()){ //is a main role
+                banker.payPlayer(active_player, 2, "credits");
+            }else{
+                banker.payPlayer(active_player, 1, "credits");
+                banker.payPlayer(active_player, 1, "cash");
+            }
+
+            if(set.getShotCounters() == 0){ //bonus check
+                ArrayList<Player> players_by_location = lm.getPlayersByLocation(set);
+                ArrayList<Player> main_role_players = new ArrayList<Player>();
+                ArrayList<Player> extra_role_players = new ArrayList<Player>();
+                
+                for(int i = 0; i < players_by_location.size(); i++){ //adding the players into 2 groups
+                    if(players_by_location.get(i).getPlayerRole().getIsMainRole()){
+                        
+                        main_role_players.add(players_by_location.get(i));
+                    } else {
+                        extra_role_players.add(players_by_location.get(i));
+                    }
+                }
+                //TODO: test!
+                Collections.sort(main_role_players, (p1, p2) -> p1.getPlayerRole().getRank() - p2.getPlayerRole().getRank());
+
+                banker.extraBonus(extra_role_players);
+                banker.sceneBonus(main_role_players, budget);
+            }
+        } else { //unsuccessful roll
+            System.out.println("\nYou're a fucking failure Eli");
+        }
     }
 
     private void rehearseAction(){
@@ -165,12 +208,10 @@ public class TurnManager {
     }
 
     private void endTurnAction(){
-        System.out.println("--endturn");
         turn_active = false;
     }
 
     private void currentPlayerInfoAction(){
-        System.out.println("--player info");
         controller.playerInfo(active_player);
     }
 
@@ -179,7 +220,6 @@ public class TurnManager {
     }
 
     private void endGameAction(){
-        System.out.println("-- end game");
         end_game = true;
     }
 

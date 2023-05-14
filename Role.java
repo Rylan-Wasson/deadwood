@@ -24,6 +24,10 @@ public class Role {
     public int getRank(){
         return this.rank;
     }
+    
+    public boolean getIsMainRole(){
+        return this.is_main_role;
+    }
 
     public boolean isTaken(){
         return taken;

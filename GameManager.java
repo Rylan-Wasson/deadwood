@@ -20,11 +20,10 @@ public class GameManager {
         this.gameBoard = new GameBoard(xmlParser.parseBoardXML());
         this.scenes = xmlParser.parseCardsXML();
         this.textController = new TextController();
-        this.locationManager = new LocationManager(gameBoard);
+        this.locationManager = new LocationManager(gameBoard, this);
         this.turnManager = new TurnManager(textController, locationManager);
     }
 
-    //GetterslocationManager.moveAllPlayers(players, gameBoard.getLocationByName("Trailer"));
     public int getNumDays(){
         return this.num_days;
     }
@@ -69,9 +68,10 @@ public class GameManager {
      * playDay()
      */
     private void playDay(){
-        while(gameBoard.getNumActiveScenes() > 1 || !end_game){
+        while((gameBoard.getNumActiveScenes() > 1) && (end_game == false)){
 
             end_game = turnManager.conductTurn(players.get(current_player_index));
+
             if(current_player_index == (players.size() - 1)){
                 current_player_index = 0;
             } else {
