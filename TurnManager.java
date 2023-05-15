@@ -106,13 +106,21 @@ public class TurnManager {
     }
 
     private void moveAction(){
+        
+
         Location cur_location = lm.getLocationByID(active_player.getPlayerID());
         ArrayList<String> adjacent_locations = cur_location.getAdjacentLocations();
         String selection = controller.getDesiredLocation(adjacent_locations);
         Location new_location = lm.getLocationByName(selection);
-
+        Boolean valid_location = false;
+        
         if(new_location != null){
-            if(adjacent_locations.contains(new_location.getName())){ //ensures the desired location is adjacent
+            for (int i = 0; i < adjacent_locations.size(); i++) { //ensures the desired location is adjacent
+                if(adjacent_locations.get(i).equalsIgnoreCase(selection)){
+                    valid_location = true;
+                }
+            }
+            if(valid_location){ 
                 lm.updateLocation(active_player.getPlayerID(), new_location);
                 has_moved = true;
                 num_actions++;
@@ -224,7 +232,30 @@ public class TurnManager {
     }
 
     private void upgradeAction(){
-        System.out.println("--upgrade");
+        CastingOffice office = (CastingOffice) lm.getLocationByName("office");
+        ArrayList<Upgrade> upgrades = office.getUpgrades();
+        controller.listUpgrades(upgrades);  
+        int level_selection = controller.readInt();
+        
+        controller.promptCurrency();
+        String currency_selection = controller.getAction();
+
+        Upgrade upgrade = null;
+        // find matching upgrade to players selection if it exists
+        for(int i = 0; i < upgrades.size(); i++){
+            Upgrade cur = upgrades.get(i);
+            if(cur.getLevel() == level_selection && cur.getCurrency().equalsIgnoreCase(currency_selection)){
+                upgrade = cur;
+            }
+        }
+
+        // if upgrade exists, verify and complete transaction
+        if(upgrade != null && upgrade.getLevel() > active_player.getRank()){
+            banker.removeFunds(active_player, upgrade.getAmmount(), upgrade.getCurrency());
+            num_actions++;
+        } else {
+            controller.badInput();
+        }
     }
 
     private void endTurnAction(){

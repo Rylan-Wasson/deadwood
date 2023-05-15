@@ -85,4 +85,16 @@ public class TextView {
         System.out.println("\nActions:");
         System.out.println(" -> player info\n -> all player info\n -> move\n -> act\n -> upgrade\n -> rehearse\n -> take role\n -> end turn\n -> end game\n------------");
     }
+
+    public void listUpgrades(ArrayList<Upgrade> upgrades){
+        System.out.println("Select a level: ");
+        for(int i = 0; i < upgrades.size(); i++){
+            Upgrade upgrade = upgrades.get(i);
+            System.out.println("> Level "+upgrade.getLevel()+") Cost: "+upgrade.getAmmount()+" "+upgrade.getCurrency());
+        }
+    }
+
+    public void promptCurrency(){
+        System.out.println("What currency would you like to use? (cash or credits)");
+    }
 }

@@ -27,7 +27,7 @@ public class TextController {
     /*
      * Reads and returns an integer from standard input
      */
-    private int readInt(){
+    public int readInt(){
         try {
             sc = new Scanner(System.in);
             int input;
@@ -110,10 +110,17 @@ public class TextController {
         textView.listRoles(main_roles, extra_roles);
     }
 
+    public void listUpgrades(ArrayList<Upgrade> upgrades){
+        textView.listUpgrades(upgrades);
+    }
+
     public void listActions(){
         textView.listActions();
     }
 
+    public void promptCurrency(){
+        textView.promptCurrency();
+    }
 
     public void closeScanner(){
         sc.close();

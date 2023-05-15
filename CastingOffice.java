@@ -8,7 +8,7 @@ public class CastingOffice extends Location {
         this.upgrades = upgrades;
     }
     
-    public void upgradePlayer(Player player){
-        
+    public ArrayList<Upgrade> getUpgrades(){
+        return upgrades;
     }
 }
