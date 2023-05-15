@@ -100,6 +100,12 @@ public class TextController {
         textView.listPlayerInfo(ID, rank, role, cash, credits, rehearse_chips);
     }
 
+    public void allPlayerInfo(ArrayList<Player> players){
+        for (int i = 0; i < players.size(); i++){
+            playerInfo(players.get(i));
+        }
+    }
+
     public void listRoles(ArrayList<Role> main_roles, ArrayList<Role> extra_roles){
         textView.listRoles(main_roles, extra_roles);
     }

@@ -62,7 +62,7 @@ public class TextView {
         System.out.println("\n  Extra Roles: ");
         for(int i = 0; i < extra_roles.size(); i++){
             Role role = extra_roles.get(i);
-            System.out.print("HERE!> "+role.getName());
+            System.out.print("> "+role.getName());
             if(role.isTaken()){
                 System.out.print("  (Taken)");
             }
@@ -83,6 +83,6 @@ public class TextView {
 
     public void listActions(){
         System.out.println("\nActions:");
-        System.out.println(" -> active player info\n -> all player info\n -> move\n -> act\n -> upgrade\n -> rehearse\n -> take role\n -> end turn\n -> end game\n------------");
+        System.out.println(" -> player info\n -> all player info\n -> move\n -> act\n -> upgrade\n -> rehearse\n -> take role\n -> end turn\n -> end game\n------------");
     }
 }

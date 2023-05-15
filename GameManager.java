@@ -21,7 +21,7 @@ public class GameManager {
         this.scenes = xmlParser.parseCardsXML();
         this.textController = new TextController();
         this.locationManager = new LocationManager(gameBoard, this);
-        this.turnManager = new TurnManager(textController, locationManager);
+        this.turnManager = new TurnManager(textController, locationManager, players);
     }
 
     public int getNumDays(){

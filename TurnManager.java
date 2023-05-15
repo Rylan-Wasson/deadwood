@@ -11,11 +11,14 @@ public class TurnManager {
     private LocationManager lm;
     private boolean end_game;
     private Banker banker;
+    private int num_actions;
+    private ArrayList<Player> players;
 
-    public TurnManager(TextController controller, LocationManager lm){
+    public TurnManager(TextController controller, LocationManager lm, ArrayList<Player> players){
         this.controller = controller;
         this.lm = lm;
         this.active_player = null;
+        this.players = players;
         banker = new Banker();
     }
     
@@ -24,7 +27,8 @@ public class TurnManager {
         active_player = player;
         turn_active = true;
         has_moved = false;
-        while(turn_active && !end_game){
+        num_actions = 0;
+        while(turn_active && !end_game && num_actions < 2){
             controller.listActions();
             String action = controller.getAction();
             switch (action) {
@@ -52,7 +56,7 @@ public class TurnManager {
                         controller.badInput("no_role");
                     }
                     break;
-                case "active player info":
+                case "player info":
                     currentPlayerInfoAction();
                     break;
                 case "all player info":
@@ -91,7 +95,6 @@ public class TurnManager {
                 } else {
                     controller.badInput("working_role");
                 }
-                    
                     break;
 
                 default:
@@ -112,6 +115,7 @@ public class TurnManager {
             if(adjacent_locations.contains(new_location.getName())){ //ensures the desired location is adjacent
                 lm.updateLocation(active_player.getPlayerID(), new_location);
                 has_moved = true;
+                num_actions++;
             } else {
                 controller.badInput();
             }
@@ -143,6 +147,7 @@ public class TurnManager {
             if(!role.taken){ //check that role is not taken
                 if(active_player.getRank() >= role.getRank()){ //check that player has sufficient rank
                     active_player.setPlayerRole(role);
+                    num_actions++;
                     role.setTaken(true);
                     turn_active = false;
                 } else {
@@ -165,14 +170,15 @@ public class TurnManager {
         if((roll_result + active_player.getRehearseChips()) >= budget){ //successful roll
 
             System.out.println("\nSuccessful roll!");
-
             set.setShotCounters(set.getShotCounters() - 1);
 
             if(active_player.getPlayerRole().getIsMainRole()){ //is a main role
                 banker.payPlayer(active_player, 2, "credits");
+                num_actions++;
             }else{
                 banker.payPlayer(active_player, 1, "credits");
                 banker.payPlayer(active_player, 1, "cash");
+                num_actions++;
             }
 
             if(set.getShotCounters() == 0){ //bonus check
@@ -182,7 +188,6 @@ public class TurnManager {
                 
                 for(int i = 0; i < players_by_location.size(); i++){ //adding the players into 2 groups
                     if(players_by_location.get(i).getPlayerRole().getIsMainRole()){
-                        
                         main_role_players.add(players_by_location.get(i));
                     } else {
                         extra_role_players.add(players_by_location.get(i));
@@ -191,16 +196,31 @@ public class TurnManager {
                 //TODO: test!
                 Collections.sort(main_role_players, (p1, p2) -> p1.getPlayerRole().getRank() - p2.getPlayerRole().getRank());
 
-                banker.extraBonus(extra_role_players);
-                banker.sceneBonus(main_role_players, budget);
+                // distribute bonuses
+                if(main_role_players.size() > 0){
+                    banker.sceneBonus(main_role_players, budget);
+                }
+
+                if(extra_role_players.size() > 0){
+                    banker.extraBonus(extra_role_players);
+                }
+                
+                // reset set/player info related to scene
+                for(int i = 0; i < players_by_location.size(); i++){
+                    players_by_location.get(i).resetRoleStatus();
+                }
+                set.setScene(null);
+                
             }
         } else { //unsuccessful roll
             System.out.println("\nYou're a fucking failure Eli");
         }
+        turn_active = false;
     }
 
     private void rehearseAction(){
-        System.out.println("--rehearse");
+        banker.payPlayer(active_player, 1, "rehearse_chips");
+        turn_active = false;
     }
 
     private void upgradeAction(){
@@ -216,7 +236,7 @@ public class TurnManager {
     }
 
     private void allPlayersInfoAction(){
-        System.out.println("-- all info");
+        controller.allPlayerInfo(players);
     }
 
     private void endGameAction(){

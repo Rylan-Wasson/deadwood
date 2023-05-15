@@ -16,8 +16,8 @@ public class Player {
         this.credits = credits;
     }
 
-    /* Resets all fields tied to the current day */
-    public void resetDayStatus(){
+    /* Resets all fields tied to the current role */
+    public void resetRoleStatus(){
         this.player_role.setTaken(false);
         this.rehearse_chips = 0;
         this.player_role = null;
