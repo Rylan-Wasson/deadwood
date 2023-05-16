@@ -132,8 +132,16 @@ public class TextController {
         textView.listWinners(winners);
     }
 
-    public void newDay(int ID, int days){
-        textView.newDay(ID, days);
+    public void newDay(int ID, int days, int num_scenes){
+        textView.newDay(ID, days, num_scenes);
+    }
+
+    public void successfulRoll(){
+        textView.successfulRoll();
+    }
+
+    public void failedRoll(){
+        textView.failedRoll();
     }
 
 }

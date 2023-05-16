@@ -110,11 +110,19 @@ public class TextView {
         }
     }
 
-    public void newDay(int ID, int days){
-        System.out.println("Player "+ID+"'s turn. "+days+" days remain!");
+    public void newDay(int ID, int days, int scenes){
+        System.out.println("\nPlayer "+ID+"'s turn. "+days+" days remain! There are "+scenes+" scenes left...");
     }
 
     public void promptCurrency(){
         System.out.println("What currency would you like to use? (dollar or credit)");
+    }
+
+    public void successfulRoll(){
+        System.out.println("successful roll!");
+    }
+
+    public void failedRoll(){
+        System.out.println("unsuccessful roll!");
     }
 }

@@ -181,8 +181,7 @@ public class TurnManager {
 
         if((roll_result + active_player.getRehearseChips()) >= budget){ //successful roll
 
-            //TODO: remove after testing
-            System.out.println("\nSuccessful roll!");
+            controller.successfulRoll();
 
             set.setShotCounters(set.getShotCounters() - 1);
 
@@ -222,12 +221,11 @@ public class TurnManager {
                     players_by_location.get(i).resetRoleStatus();
                 }
                 set.setScene(null);
+                lm.decrementNumScenes();
                 
             }
         } else { //unsuccessful roll
-
-            //TODO: implement after testing
-            System.out.println("\nUnsuccessful roll");
+            controller.failedRoll();
         }
         turn_active = false;
     }
