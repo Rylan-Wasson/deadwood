@@ -62,6 +62,8 @@ public class GameManager {
                 end_game = true;
             }
         }
+        scorePlayers();
+
      }
 
     /*
@@ -138,7 +140,23 @@ public class GameManager {
         gameBoard.distributeScenes(scenes);
     }
 
+    /* Calculate winner(s) of game, and announce to players */
+    private void scorePlayers(){
+        ArrayList<Player> winners = new ArrayList<Player>();
+        winners.add(players.get(0)); // initialize winner
+        for(int i = 1; i < players.size(); i++){ // compare scores, put winning player(s) in winners list
+            Player cur = players.get(i);
+            if(cur.getScore() > winners.get(0).getScore()){ // higher score than anyone in list, reset and add them
+                winners.clear();
+                winners.add(cur);
+            } else if(cur.getScore() == winners.get(0).getScore()) { // tied for high score, add to winners
+                winners.add(cur);
+            }
+        }
+        textController.listWinners(winners);
+    }
 
+    
     /*
      * Rolls X dice and returns an int[] of the generate rolls 
      */

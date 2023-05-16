@@ -125,6 +125,10 @@ public class TextController {
         textView.promptCurrency();
     }
 
+    public void listWinners(ArrayList<Player> winners){
+        textView.listWinners(winners);
+    }
+
     public void closeScanner(){
         sc.close();
     }

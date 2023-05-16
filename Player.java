@@ -48,6 +48,10 @@ public class Player {
     public int getRehearseChips() {
         return rehearse_chips;
     }
+
+    public int getScore() {
+        return cash + credits + (5 * rank);
+    }
     
 
     // ----- mutators -----

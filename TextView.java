@@ -94,7 +94,15 @@ public class TextView {
         System.out.println("Select a level: ");
         for(int i = 0; i < upgrades.size(); i++){
             Upgrade upgrade = upgrades.get(i);
-            System.out.println("> Level "+upgrade.getLevel()+") Cost: "+upgrade.getAmmount()+" "+upgrade.getCurrency());
+            System.out.println("> Level ("+upgrade.getLevel()+") Cost: "+upgrade.getAmmount()+" "+upgrade.getCurrency());
+        }
+    }
+
+    public void listWinners(ArrayList<Player> winners){
+        System.out.println("\n---Winners are---");
+        for(int i = 0; i < winners.size(); i++){
+            Player cur = winners.get(i);
+            System.out.println("Player "+cur.getPlayerID()+" Score: "+cur.getScore());
         }
     }
 
