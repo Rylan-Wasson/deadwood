@@ -132,6 +132,10 @@ public class TextController {
         textView.listWinners(winners);
     }
 
+    public void newDay(int ID, int days){
+        textView.newDay(ID, days);
+    }
+
     public void closeScanner(){
         sc.close();
     }

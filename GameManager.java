@@ -71,7 +71,7 @@ public class GameManager {
      */
     private void playDay(){
         while((gameBoard.getNumActiveScenes() > 1) && (end_game == false)){
-
+            textController.newDay(players.get(current_player_index).getPlayerID(), num_days);
             end_game = turnManager.conductTurn(players.get(current_player_index));
 
             if(current_player_index == (players.size() - 1)){

@@ -110,6 +110,10 @@ public class TextView {
         }
     }
 
+    public void newDay(int ID, int days){
+        System.out.println("Player "+ID+"'s turn. "+days+" days remain!");
+    }
+
     public void promptCurrency(){
         System.out.println("What currency would you like to use? (dollar or credit)");
     }
