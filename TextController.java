@@ -68,6 +68,9 @@ public class TextController {
             case "already_moved":
                 textView.printBadSelectionAlreadyMoved();
                 break;
+            case "has_moved":
+                textView.printBadSelectionHasUpgraded();
+                break;
             case "no_role":
                 textView.printBadSelectionNoRole();
                 break;

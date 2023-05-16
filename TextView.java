@@ -28,6 +28,10 @@ public class TextView {
         System.out.println("Cannot do this action, you've already moved. Please try again.");
     }
 
+    public void printBadSelectionHasUpgraded(){
+        System.out.println("Cannot do this action, you've already upgraded. Please try again.");
+    }
+
     public void printBadSelectionNoRole(){
         System.out.println("Cannot do this action, you're not currently working a role. Please try again.");
     }

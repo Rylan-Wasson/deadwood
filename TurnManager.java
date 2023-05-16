@@ -6,12 +6,12 @@ import java.util.Random;
 public class TurnManager {
     private Boolean turn_active;
     private Boolean has_moved;
+    private Boolean has_upgraded;
     private Player active_player;
     private TextController controller;
     private LocationManager lm;
     private boolean end_game;
     private Banker banker;
-    private int num_actions;
     private ArrayList<Player> players;
 
     public TurnManager(TextController controller, LocationManager lm, ArrayList<Player> players){
@@ -27,8 +27,9 @@ public class TurnManager {
         active_player = player;
         turn_active = true;
         has_moved = false;
-        num_actions = 0;
-        while(turn_active && !end_game && num_actions < 2){
+        has_upgraded = false;
+
+        while(turn_active && !end_game){
             controller.listActions();
             String action = controller.getAction();
             switch (action) {
@@ -65,7 +66,11 @@ public class TurnManager {
                 case "upgrade":
                 if(active_player.getPlayerRole() == null){
                     if(lm.getLocationByID(active_player.getPlayerID()).getName().equalsIgnoreCase("office")){
-                        upgradeAction();
+                        if(!has_upgraded){
+                            upgradeAction();
+                        } else {
+                            controller.badInput("has_upgraded");
+                        }
                     } else {
                         controller.badInput("wrong_location");
                     }  
@@ -123,7 +128,6 @@ public class TurnManager {
             if(valid_location){ 
                 lm.updateLocation(active_player.getPlayerID(), new_location);
                 has_moved = true;
-                num_actions++;
             } else {
                 controller.badInput();
             }
@@ -155,7 +159,6 @@ public class TurnManager {
             if(!role.taken){ //check that role is not taken
                 if(active_player.getRank() >= role.getRank()){ //check that player has sufficient rank
                     active_player.setPlayerRole(role);
-                    num_actions++;
                     role.setTaken(true);
                     turn_active = false;
                 } else {
@@ -182,11 +185,9 @@ public class TurnManager {
 
             if(active_player.getPlayerRole().getIsMainRole()){ //is a main role
                 banker.payPlayer(active_player, 2, "credits");
-                num_actions++;
             }else{
                 banker.payPlayer(active_player, 1, "credits");
                 banker.payPlayer(active_player, 1, "cash");
-                num_actions++;
             }
 
             if(set.getShotCounters() == 0){ //bonus check
@@ -221,7 +222,7 @@ public class TurnManager {
                 
             }
         } else { //unsuccessful roll
-            System.out.println("\nYou're a fucking failure Eli");
+            System.out.println("\nUnsuccessful roll");
         }
         turn_active = false;
     }
@@ -252,7 +253,7 @@ public class TurnManager {
         // if upgrade exists, verify and complete transaction
         if(upgrade != null && upgrade.getLevel() > active_player.getRank()){
             banker.removeFunds(active_player, upgrade.getAmmount(), upgrade.getCurrency());
-            num_actions++;
+            has_upgraded = true;
         } else {
             controller.badInput();
         }
@@ -273,5 +274,4 @@ public class TurnManager {
     private void endGameAction(){
         end_game = true;
     }
-
 }
