@@ -24,6 +24,7 @@ public class GameBoard {
             Location location = locations.get(i);
             if(location instanceof Set){
                 Set set = (Set) location;
+                set.setShotCounters(set.getMaxShotCounters());
                 set.setScene(scenes.get(i));
             }
         }
@@ -37,15 +38,5 @@ public class GameBoard {
             }
         }
         return null;
-    }
-
-    //TODO: remove after testing
-    public void printLocations(){
-        for(int i = 0; i < locations.size(); i++){
-            System.out.println("Location: " + i + " " + locations.get(i).getName());
-            for(int j = 0; j < locations.get(i).getAdjacentLocations().size(); j++){
-                System.out.println("    --->ADJ Location: " + locations.get(i).getAdjacentLocations().get(j));
-            }
-        }
     }
 }

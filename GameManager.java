@@ -63,11 +63,11 @@ public class GameManager {
             }
         }
         scorePlayers();
-
      }
 
     /*
      * playDay()
+     * execute one in-game day
      */
     private void playDay(){
         while((gameBoard.getNumActiveScenes() > 1) && (end_game == false)){

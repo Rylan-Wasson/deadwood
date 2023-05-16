@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Random;
 
 public class TurnManager {
@@ -22,6 +21,7 @@ public class TurnManager {
         banker = new Banker();
     }
     
+    /* Conduct one in game turn for given player, until they end turn or choose a combination of actions that results in turn end */
     public boolean conductTurn(Player player){
         end_game = false;
         active_player = player;
@@ -110,9 +110,8 @@ public class TurnManager {
         return end_game;
     }
 
+    /* Prompt player for desired location, and attempt to update players location based on selection */
     private void moveAction(){
-        
-
         Location cur_location = lm.getLocationByID(active_player.getPlayerID());
         ArrayList<String> adjacent_locations = cur_location.getAdjacentLocations();
         String selection = controller.getDesiredLocation(adjacent_locations);
@@ -136,6 +135,7 @@ public class TurnManager {
         }
     }
 
+    /* Prompt user for desired role, and update if chosen role is possible for the player */
     private void takeRoleAction(){
         Set set = (Set) lm.getLocationByID(active_player.getPlayerID());
         ArrayList<Role> main_roles = set.getScene().getRoles();
@@ -172,6 +172,7 @@ public class TurnManager {
         }
     }
 
+    /* Attempt an act role for the player, giving rewards on success */
     private void actRoleAction(){
         Random player_roll = new Random();
         int roll_result = (player_roll.nextInt(6) + 1);
@@ -231,11 +232,13 @@ public class TurnManager {
         turn_active = false;
     }
 
+    /* Give the player a rehearse chip */
     private void rehearseAction(){
         banker.payPlayer(active_player, 1, "rehearse_chips");
         turn_active = false;
     }
 
+    /* Prompt user for desired upgrade and currency, attempt to verify the transaction and update level as needed */
     private void upgradeAction(){
         CastingOffice office = (CastingOffice) lm.getLocationByName("office");
         ArrayList<Upgrade> upgrades = office.getUpgrades();

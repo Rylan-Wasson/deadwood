@@ -10,7 +10,6 @@ public class Set extends Location {
         super(name, nearby_locations);
         this.shot_counters = shot_counters;
         this.max_shot_counters = max_shot_counters;
-        this.set_scene = set_scene;
         this.extra_roles = extra_roles;
     }   
 
@@ -27,6 +26,10 @@ public class Set extends Location {
 
     public ArrayList<Role> getExtraRoles(){
         return extra_roles;
+    }
+
+    public int getMaxShotCounters(){
+        return max_shot_counters;
     }
 
     // -----Mutators-----

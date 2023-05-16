@@ -64,8 +64,6 @@ public class Player {
         this.credits = credits;
     }
 
-
-
     public void setPlayerID(int player_id) {
         this.player_id = player_id;
     }

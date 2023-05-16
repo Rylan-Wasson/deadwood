@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class TextController {
     
     private TextView textView;
-    private Scanner sc; //TODO: SCANNER NOT CLOSED, INFINITE LOOP BUG?
+    private Scanner sc; 
 
     public TextController(){
         textView = new TextView();
@@ -136,7 +136,4 @@ public class TextController {
         textView.newDay(ID, days);
     }
 
-    public void closeScanner(){
-        sc.close();
-    }
 }
