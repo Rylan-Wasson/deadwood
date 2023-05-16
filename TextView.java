@@ -48,6 +48,10 @@ public class TextView {
         System.out.println("Cannot do this action, your rank is too low. Please try again.");
     }
 
+    public void printBadSelectionInvalidFunds(){
+        System.out.println("Cannot do this action, you don't have sufficent funds. Please try again.");
+    }
+
 
 
     public void listRoles(ArrayList<Role> main_roles, ArrayList<Role> extra_roles){
@@ -91,7 +95,7 @@ public class TextView {
     }
 
     public void listUpgrades(ArrayList<Upgrade> upgrades){
-        System.out.println("Select a level: ");
+        System.out.println("Select a level (type number): ");
         for(int i = 0; i < upgrades.size(); i++){
             Upgrade upgrade = upgrades.get(i);
             System.out.println("> Level ("+upgrade.getLevel()+") Cost: "+upgrade.getAmmount()+" "+upgrade.getCurrency());
@@ -107,6 +111,6 @@ public class TextView {
     }
 
     public void promptCurrency(){
-        System.out.println("What currency would you like to use? (cash or credits)");
+        System.out.println("What currency would you like to use? (dollar or credit)");
     }
 }

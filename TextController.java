@@ -68,7 +68,7 @@ public class TextController {
             case "already_moved":
                 textView.printBadSelectionAlreadyMoved();
                 break;
-            case "has_moved":
+            case "has_upgraded":
                 textView.printBadSelectionHasUpgraded();
                 break;
             case "no_role":
@@ -82,6 +82,9 @@ public class TextController {
                 break;
             case "low_rank":
                 textView.printBadSelectionLowRank();
+                break;
+            case "invalid_funds":
+            textView.printBadSelectionInvalidFunds();
                 break;
             default:
                 break;

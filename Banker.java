@@ -22,9 +22,9 @@ public class Banker {
     */
     public int removeFunds(Player player, int amount, String currency) {
         if(verifyFunds(player, amount, currency)){
-            if(currency.equals("credits")){
+            if(currency.equals("credit")){
                 player.setCredits(player.getCredits() - amount);
-            } else if(currency.equals("cash")){
+            } else if(currency.equals("dollar")){
                 player.setCash(player.getCash() - amount);
             } else if(currency.equals("rehearse_chips")){
                 player.setRehearse_chips(player.getRehearseChips() - amount);
@@ -37,11 +37,11 @@ public class Banker {
     }
     /*  verifies that player has ammount of type currency or more */
     private boolean verifyFunds(Player player, int amount, String currency){
-        if(currency.equals("credits")){
+        if(currency.equals("credit")){
             if(player.getCredits() >= amount){
                 return true;
             }
-        } else if(currency.equals("cash")){
+        } else if(currency.equals("dollar")){
             if(player.getCash() >= amount){
                 return true;
             }

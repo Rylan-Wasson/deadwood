@@ -180,7 +180,9 @@ public class TurnManager {
 
         if((roll_result + active_player.getRehearseChips()) >= budget){ //successful roll
 
+            //TODO: remove after testing
             System.out.println("\nSuccessful roll!");
+
             set.setShotCounters(set.getShotCounters() - 1);
 
             if(active_player.getPlayerRole().getIsMainRole()){ //is a main role
@@ -202,7 +204,7 @@ public class TurnManager {
                         extra_role_players.add(players_by_location.get(i));
                     }
                 }
-                //TODO: test!
+                //Sorts the players who have a main role by the rank of said role
                 Collections.sort(main_role_players, (p1, p2) -> p1.getPlayerRole().getRank() - p2.getPlayerRole().getRank());
 
                 // distribute bonuses
@@ -222,6 +224,8 @@ public class TurnManager {
                 
             }
         } else { //unsuccessful roll
+
+            //TODO: implement after testing
             System.out.println("\nUnsuccessful roll");
         }
         turn_active = false;
@@ -252,8 +256,12 @@ public class TurnManager {
 
         // if upgrade exists, verify and complete transaction
         if(upgrade != null && upgrade.getLevel() > active_player.getRank()){
-            banker.removeFunds(active_player, upgrade.getAmmount(), upgrade.getCurrency());
-            has_upgraded = true;
+            if(banker.removeFunds(active_player, upgrade.getAmmount(), upgrade.getCurrency()) == 0){
+                active_player.setRank(upgrade.getLevel());
+                has_upgraded = true;
+            } else {
+                controller.badInput("invalid_funds");
+            }
         } else {
             controller.badInput();
         }
