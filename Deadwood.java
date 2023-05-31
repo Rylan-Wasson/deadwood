@@ -11,6 +11,5 @@ public class Deadwood{
         } else {
             System.err.println("Usage: Deadwood [num players]");
         }
-        
     }
 }

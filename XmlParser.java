@@ -111,7 +111,6 @@ public class XmlParser {
                 locations.add(set);
             } // sets
 
-
             NodeList trailer_nodes = document.getElementsByTagName("trailer");
             /* Iterate through trailers */
             for(int i = 0; i < trailer_nodes.getLength(); i++){
@@ -119,14 +118,26 @@ public class XmlParser {
                 Node cur_trailer_node = trailer_nodes.item(i);
                 NodeList trailer_children = cur_trailer_node.getChildNodes();
                 String name = "Trailer";
+                int x = 0;
+                int y = 0;
+                int w = 0;
+                int h = 0;
                 /* Iterate through trailer children */
                 for(int j = 0; j < trailer_children.getLength(); j++){ 
                     Node sub = trailer_children.item(j);
+                    if(sub.getNodeName().equals("area")){
+                        Element area_element = (Element) sub;
+                        x = Integer.parseInt(area_element.getAttribute("x")); 
+                        y = Integer.parseInt(area_element.getAttribute("y")); 
+                        w = Integer.parseInt(area_element.getAttribute("w")); 
+                        h = Integer.parseInt(area_element.getAttribute("h")); 
+                    }
+
                     if(sub.getNodeName().equals("neighbors")){
                         NodeList neighbors = sub.getChildNodes();
                         /* Iterate through neighbors */
-                        for(int x = 0; x < neighbors.getLength(); x++){
-                            Node neighbor = neighbors.item(x);
+                        for(int f = 0; f < neighbors.getLength(); f++){
+                            Node neighbor = neighbors.item(f);
                             if(neighbor.getNodeName().equals("neighbor")){
                                 String n_name = neighbor.getAttributes().getNamedItem("name").getNodeValue();
                                 adjacent_locations.add(n_name);
@@ -134,13 +145,17 @@ public class XmlParser {
                         }
                     }
                 } // trailer children
-                // Location trailer = new Location(name, adjacent_locations);
-                // locations.add(trailer);
+                Location trailer = new Location(name, adjacent_locations, x, y, w, h);
+                locations.add(trailer);
             } // trailers
 
             /* Office */
             NodeList offices = document.getElementsByTagName("office");
             if(offices.getLength()>0){
+                int x = 0;
+                int y = 0;
+                int w = 0;
+                int h = 0;
                 Node office = offices.item(0);
                 String name = "Office";
                 ArrayList<String> adjacent_locations = new ArrayList<String>();
@@ -149,6 +164,14 @@ public class XmlParser {
                 /* Iterate through office children */
                 for(int i = 0; i < office_children.getLength(); i++){
                     Node sub = office_children.item(i);
+
+                    if(sub.getNodeName().equals("area")){
+                        Element area_element = (Element) sub;
+                        x = Integer.parseInt(area_element.getAttribute("x")); 
+                        y = Integer.parseInt(area_element.getAttribute("y")); 
+                        w = Integer.parseInt(area_element.getAttribute("w")); 
+                        h = Integer.parseInt(area_element.getAttribute("h")); 
+                    }
                     if(sub.getNodeName().equals("neighbors")){
                         NodeList neighbors = sub.getChildNodes();
                         /* Iterate through office neighbors */
@@ -163,20 +186,31 @@ public class XmlParser {
                         NodeList upgrade_nodes = sub.getChildNodes();
                         /* Iterate through upgrades */
                         for(int j = 0; j < upgrade_nodes.getLength(); j++){
+                            int ux = 0;
+                            int uy = 0;
+                            int uw = 0;
+                            int uh = 0;
                             Node upgrade_node = upgrade_nodes.item(j);
                             if(upgrade_node.getNodeName().equals("upgrade")){
                                 Element upgrade_element = (Element) upgrade_node;
+                                Element area_element = (Element) upgrade_element.getElementsByTagName("area").item(0);
                                 int level = Integer.parseInt(upgrade_element.getAttribute("level"));
                                 int ammount = Integer.parseInt(upgrade_element.getAttribute("amt"));
                                 String currency = upgrade_element.getAttribute("currency");
-                                // Upgrade upgrade = new Upgrade(level, ammount, currency);
-                                // upgrades.add(upgrade);
+
+                                ux = Integer.parseInt(area_element.getAttribute("x")); 
+                                uy = Integer.parseInt(area_element.getAttribute("y")); 
+                                uw = Integer.parseInt(area_element.getAttribute("w")); 
+                                uh = Integer.parseInt(area_element.getAttribute("h")); 
+                                Upgrade upgrade = new Upgrade(level, ammount, currency, ux, uy, uw, uh);
+                                upgrades.add(upgrade);
+                                
                             }
                         } // upgrades   
                     }
                 } // office children
-                // CastingOffice casting_office = new CastingOffice(name, adjacent_locations, upgrades);
-                // locations.add(casting_office);
+                CastingOffice casting_office = new CastingOffice(name, adjacent_locations, upgrades, x, y, w, h);
+                locations.add(casting_office);
             } // office
             return locations;
 
@@ -199,6 +233,7 @@ public class XmlParser {
             for(int i = 0; i < card_nodes.getLength(); i++){
                 Scene scene = null;
                 Node card = card_nodes.item(i);
+                String img = card.getAttributes().getNamedItem("img").getNodeValue();
                 String name = card.getAttributes().getNamedItem("name").getNodeValue();
                 int budget = Integer.parseInt(card.getAttributes().getNamedItem("budget").getNodeValue());
                 ArrayList<Role> roles = new ArrayList<Role>();
@@ -213,15 +248,22 @@ public class XmlParser {
                             Element scene_element = (Element) sub;
                             int s_num = Integer.parseInt(scene_element.getAttribute("number"));
                             String s_line = scene_element.getTextContent();
-                            // scene = new Scene(name, s_line, budget, s_num);
+                            scene = new Scene(name, s_line, budget, s_num, img);
                             break;
                         case "part":
                             Element part_element = (Element) sub;
                             String p_name = part_element.getAttribute("name");
                             int p_level = Integer.parseInt(part_element.getAttribute("level"));
                             String p_line = part_element.getElementsByTagName("line").item(0).getTextContent();
-                            // Role main_role = new Role(p_name, p_line, p_level, true);
-                            // roles.add(main_role);
+
+                            NodeList areaNodes = part_element.getElementsByTagName("area");
+                            Element area_element = (Element) areaNodes.item(0);
+                            int x = Integer.parseInt(area_element.getAttribute("x")); 
+                            int y = Integer.parseInt(area_element.getAttribute("y")); 
+                            int w = Integer.parseInt(area_element.getAttribute("w")); 
+                            int h = Integer.parseInt(area_element.getAttribute("h")); 
+                            Role main_role = new Role(p_name, p_line, p_level, true, x, y, w, h);
+                            roles.add(main_role);
                             break;
                         default:
                             break;
@@ -235,11 +277,9 @@ public class XmlParser {
             } // cards
             return scenes;
         } catch (Exception e) {
+            e.printStackTrace();
             System.err.print("Error parsing file");
         }
-        
         return null;
     }   
-
-    
 }
