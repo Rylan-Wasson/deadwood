@@ -25,7 +25,10 @@ public class XmlParser {
                 ArrayList<String> adjacent_locations = new ArrayList<String>();
                 ArrayList<Role> extra_roles = new ArrayList<Role>();
                 int max_shot_counters = 0;
-
+                int sx = 0;
+                int sy = 0;
+                int sw = 0;
+                int sh = 0; // area variables for set
                 Node cur_set_node = set_nodes.item(i);
                 String name = cur_set_node.getAttributes().getNamedItem("name").getNodeValue(); //grab set name
 
@@ -46,7 +49,11 @@ public class XmlParser {
                             }
                             break;
                         case "area":
-                            //TODO implement me for gui
+                            Element set_area = (Element) sub;
+                            sx = Integer.parseInt(set_area.getAttribute("x")); 
+                            sy = Integer.parseInt(set_area.getAttribute("y")); 
+                            sw = Integer.parseInt(set_area.getAttribute("w")); 
+                            sh = Integer.parseInt(set_area.getAttribute("h")); 
                             break;
                         case "takes":
                             NodeList take_nodes = sub.getChildNodes();
@@ -64,20 +71,33 @@ public class XmlParser {
                             break;
                         case "parts":
                             NodeList parts = sub.getChildNodes();
-                            for(int y = 0; y < parts.getLength(); y++){ //iterate through parts
-                                Node part = parts.item(y);
+                            for(int f = 0; f < parts.getLength(); f++){ //iterate through parts
+                                Node part = parts.item(f);
                                 if(part.getNodeType() == Node.ELEMENT_NODE){
                                     Element part_element = (Element) part;
                                     String p_name = part_element.getAttribute("name");
                                     int level = Integer.parseInt(part_element.getAttribute("level"));
                                     String line = "";
+                                    int x = 0;
+                                    int y = 0;
+                                    int w = 0;
+                                    int h = 0;
                                     
+                                    NodeList area_nodes = part_element.getElementsByTagName("area"); //grab area
+                                    if(area_nodes.getLength() > 0){
+                                        Element area_element = (Element) area_nodes.item(0);
+                                        x = Integer.parseInt(area_element.getAttribute("x")); 
+                                        y = Integer.parseInt(area_element.getAttribute("y")); 
+                                        w = Integer.parseInt(area_element.getAttribute("w")); 
+                                        h = Integer.parseInt(area_element.getAttribute("h")); 
+                                    }
+
                                     NodeList line_nodes = part_element.getElementsByTagName("line"); //grab line 
                                     if(line_nodes.getLength() > 0){
                                         Element line_element = (Element) line_nodes.item(0);
                                         line = line_element.getTextContent();
                                     }
-                                    Role role = new Role(p_name, line, level, false);
+                                    Role role = new Role(p_name, line, level, false, x, y , w, h);
                                     extra_roles.add(role);
                                 }
                                 
@@ -87,7 +107,7 @@ public class XmlParser {
                             break;
                     }
                 } // set children 
-                Set set = new Set(name, adjacent_locations, max_shot_counters, max_shot_counters, extra_roles);
+                Set set = new Set(name, adjacent_locations, max_shot_counters, max_shot_counters, extra_roles, sx, sy, sw, sh);
                 locations.add(set);
             } // sets
 
@@ -114,8 +134,8 @@ public class XmlParser {
                         }
                     }
                 } // trailer children
-                Location trailer = new Location(name, adjacent_locations);
-                locations.add(trailer);
+                // Location trailer = new Location(name, adjacent_locations);
+                // locations.add(trailer);
             } // trailers
 
             /* Office */
@@ -149,14 +169,14 @@ public class XmlParser {
                                 int level = Integer.parseInt(upgrade_element.getAttribute("level"));
                                 int ammount = Integer.parseInt(upgrade_element.getAttribute("amt"));
                                 String currency = upgrade_element.getAttribute("currency");
-                                Upgrade upgrade = new Upgrade(level, ammount, currency);
-                                upgrades.add(upgrade);
+                                // Upgrade upgrade = new Upgrade(level, ammount, currency);
+                                // upgrades.add(upgrade);
                             }
                         } // upgrades   
                     }
                 } // office children
-                CastingOffice casting_office = new CastingOffice(name, adjacent_locations, upgrades);
-                locations.add(casting_office);
+                // CastingOffice casting_office = new CastingOffice(name, adjacent_locations, upgrades);
+                // locations.add(casting_office);
             } // office
             return locations;
 
@@ -193,15 +213,15 @@ public class XmlParser {
                             Element scene_element = (Element) sub;
                             int s_num = Integer.parseInt(scene_element.getAttribute("number"));
                             String s_line = scene_element.getTextContent();
-                            scene = new Scene(name, s_line, budget, s_num);
+                            // scene = new Scene(name, s_line, budget, s_num);
                             break;
                         case "part":
                             Element part_element = (Element) sub;
                             String p_name = part_element.getAttribute("name");
                             int p_level = Integer.parseInt(part_element.getAttribute("level"));
                             String p_line = part_element.getElementsByTagName("line").item(0).getTextContent();
-                            Role main_role = new Role(p_name, p_line, p_level, true);
-                            roles.add(main_role);
+                            // Role main_role = new Role(p_name, p_line, p_level, true);
+                            // roles.add(main_role);
                             break;
                         default:
                             break;

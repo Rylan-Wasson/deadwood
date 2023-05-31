@@ -1,11 +1,12 @@
-public class Role {
+public class Role extends GameObject {
     protected String description;
     protected String name;
     protected int rank;
     protected boolean is_main_role;
     protected boolean taken;
 
-    public Role(String name, String description, int rank, boolean is_main_role){
+    public Role(String name, String description, int rank, boolean is_main_role, int x, int y, int width, int height){
+        super(x, y, width, height);
         this.description = description;
         this.name = name;
         this.rank = rank;
@@ -36,6 +37,4 @@ public class Role {
     public void setTaken(boolean status){
         taken = status;
     }
-
-    
 }

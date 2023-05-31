@@ -6,8 +6,8 @@ public class Set extends Location {
     private Scene set_scene;
     private ArrayList<Role> extra_roles;
 
-    public Set(String name, ArrayList<String> nearby_locations, int shot_counters, int max_shot_counters, ArrayList<Role> extra_roles){
-        super(name, nearby_locations);
+    public Set(String name, ArrayList<String> nearby_locations, int shot_counters, int max_shot_counters, ArrayList<Role> extra_roles, int x, int y, int width, int height){
+        super(name, nearby_locations, x, y, width, height);
         this.shot_counters = shot_counters;
         this.max_shot_counters = max_shot_counters;
         this.extra_roles = extra_roles;
