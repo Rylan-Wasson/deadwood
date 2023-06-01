@@ -7,7 +7,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class BoardView extends JFrame{
+    final String
+    
     HashMap<String, JLabel> cards;
+    HashMap<String, JLabel> covers;
     // JLabels
     JLabel boardlabel;
     
@@ -34,7 +37,7 @@ public class BoardView extends JFrame{
     public BoardView(){
         super("Deadwood");
         cards = new HashMap<>();
-
+        covers = new HashMap<>();
         // Set the exit option for the JFrame
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -194,4 +197,6 @@ public class BoardView extends JFrame{
         label.setOpaque(true);
         bPane.add(label, (Integer) 1);
     }
+
+
 }

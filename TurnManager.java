@@ -183,7 +183,7 @@ public class TurnManager {
 
             controller.successfulRoll();
 
-            set.setShotCounters(set.getShotCounters() - 1);
+            set.decrementShotCounters();
 
             if(active_player.getPlayerRole().getIsMainRole()){ //is a main role
                 banker.payPlayer(active_player, 2, "credits");

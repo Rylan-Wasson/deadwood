@@ -1,5 +1,7 @@
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -24,6 +26,7 @@ public class XmlParser {
             for(int i = 0; i < set_nodes.getLength(); i++){
                 ArrayList<String> adjacent_locations = new ArrayList<String>();
                 ArrayList<Role> extra_roles = new ArrayList<Role>();
+                ArrayList<ShotCounter> shot_counters = new ArrayList<ShotCounter>();
                 int max_shot_counters = 0;
                 int sx = 0;
                 int sy = 0;
@@ -62,9 +65,13 @@ public class XmlParser {
                                 if(take.getNodeType() == Node.ELEMENT_NODE){
                                     Element takeElement = (Element) take;
                                     int num = Integer.parseInt(takeElement.getAttribute("number"));
-                                    if(max_shot_counters < num){
-                                        max_shot_counters = num;
-                                    }
+                                    Element area_element = (Element) take.getChildNodes().item(0);
+                                    int x = Integer.parseInt(area_element.getAttribute("x")); 
+                                    int y = Integer.parseInt(area_element.getAttribute("y")); 
+                                    int w = Integer.parseInt(area_element.getAttribute("w")); 
+                                    int h = Integer.parseInt(area_element.getAttribute("h")); 
+                                    ShotCounter counter = new ShotCounter(num, x, y, w, h);
+                                    shot_counters.add(counter);
                                 }
                             }
                             
@@ -107,7 +114,7 @@ public class XmlParser {
                             break;
                     }
                 } // set children 
-                Set set = new Set(name, adjacent_locations, max_shot_counters, max_shot_counters, extra_roles, sx, sy, sw, sh);
+                Set set = new Set(name, adjacent_locations, shot_counters, max_shot_counters, extra_roles, sx, sy, sw, sh);
                 locations.add(set);
             } // sets
 
