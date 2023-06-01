@@ -14,5 +14,7 @@ public class Deadwood{
 
         BoardView bv = new BoardView();
         bv.setVisible(true);
+        bv.addCard("Test", "10.png");
+        bv.putCard("Test", 969, 740);
     }
 }
