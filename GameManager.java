@@ -8,9 +8,9 @@ public class GameManager {
     private final int dice_sides = 6;
     private XmlParser xmlParser;
     private GameBoard gameBoard;
-    private TextController textController;
+    private GuiController guiController;
     private LocationManager locationManager;
-    private TurnManager turnManager;
+    //private TurnManager turnManager;
     private boolean end_game;
     private ArrayList<Scene> scenes;
     private int current_player_index;
@@ -19,9 +19,9 @@ public class GameManager {
         this.xmlParser = new XmlParser();
         this.gameBoard = new GameBoard(xmlParser.parseBoardXML());
         this.scenes = xmlParser.parseCardsXML();
-        this.textController = new TextController();
         this.locationManager = new LocationManager(gameBoard, this);
-        this.turnManager = new TurnManager(textController, locationManager, players);
+        this.guiController = new GuiController(scenes, gameBoard.getLocations());
+        //this.turnManager = new TurnManager(guiController, locationManager, players);
     }
 
     public int getNumDays(){
@@ -72,8 +72,8 @@ public class GameManager {
      */
     private void playDay(){
         while((gameBoard.getNumActiveScenes() > 1) && (end_game == false)){
-            textController.newDay(players.get(current_player_index).getPlayerID(), num_days, gameBoard.getNumActiveScenes());
-            end_game = turnManager.conductTurn(players.get(current_player_index));
+            //textController.newDay(players.get(current_player_index).getPlayerID(), num_days, gameBoard.getNumActiveScenes());
+            //end_game = turnManager.conductTurn(players.get(current_player_index));
 
             if(current_player_index == (players.size() - 1)){
                 current_player_index = 0;
@@ -91,7 +91,8 @@ public class GameManager {
     public void setupGame(int num_players){
 
         setNumPlayers(num_players);
-
+        guiController.initPlayers(num_players);
+        guiController.buildShots(gameBoard.getLocations());
         // Creates all the players based on player count, adds them to the players LinkedList
         for(int i = 1; i <= num_players; i++){
             Player new_player = null;
@@ -139,6 +140,8 @@ public class GameManager {
     private void setupDay(){
         locationManager.moveAllPlayers(players, gameBoard.getLocationByName("Trailer"));
         gameBoard.distributeScenes(scenes);
+        guiController.distributeScenes(gameBoard.getLocations());
+        guiController.distributeShotCounters(gameBoard.getLocations());
     }
 
     /* Calculate winner(s) of game, and announce to players */
@@ -154,7 +157,7 @@ public class GameManager {
                 winners.add(cur);
             }
         }
-        textController.listWinners(winners);
+        //textController.listWinners(winners);
     }
 
     

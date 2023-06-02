@@ -1,6 +1,7 @@
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -114,6 +115,7 @@ public class XmlParser {
                             break;
                     }
                 } // set children 
+                Collections.sort(shot_counters, Comparator.comparing(ShotCounter::getNum)); //TODO untested 
                 Set set = new Set(name, adjacent_locations, shot_counters, max_shot_counters, extra_roles, sx, sy, sw, sh);
                 locations.add(set);
             } // sets

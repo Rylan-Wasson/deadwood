@@ -18,8 +18,12 @@ public class Set extends Location {
 
     // -----Accessors-----
 
-    public int getShotCounters(){
-        return counters.size();
+    public int getNumShotCounters(){
+        return num_counters;
+    }
+
+    public ArrayList<ShotCounter> getShotCounters(){
+        return this.counters;
     }
 
     public Scene getScene(){
@@ -37,7 +41,6 @@ public class Set extends Location {
     // -----Mutators-----
 
     public void decrementShotCounters(){
-        this.counters.remove(this.counters.size()-1);
         this.num_counters -= 1;
     }
 

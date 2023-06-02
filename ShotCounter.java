@@ -10,4 +10,8 @@ public class ShotCounter extends GameObject{
     public void setActive(Boolean condition){
         this.active = condition;
     }
+
+    public int getNum(){
+        return num;
+    }
 }

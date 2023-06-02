@@ -17,6 +17,10 @@ public class GameBoard {
         numActiveScenes = numScenes;
     }
 
+    public ArrayList<Location> getLocations(){
+        return this.locations;
+    }
+
     public void distributeScenes(ArrayList<Scene> scenes){
         Collections.shuffle(scenes);
 
