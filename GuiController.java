@@ -7,7 +7,10 @@ import javax.swing.JOptionPane;
 public class GuiController {
     private BoardView view = null;
     private boardMouseListener listener;
+
+    //TODO: fix constructor and remove GM
     private GameManager gameManager;
+
     private TurnManager turnManager;
 
     public GuiController(ArrayList<Scene> scenes, ArrayList<Location> locations, GameManager gameManager){
@@ -189,6 +192,33 @@ public class GuiController {
 
     public void endTurn(){
         turnManager.endTurnAction();
+    }
+
+    public void upgradeAction(){
+        ArrayList<Upgrade> upgrades = turnManager.getUpgrades();
+        if(upgrades != null){
+
+            //list of upgrades names
+            String[] upgrade_strs = new String[upgrades.size()];
+
+            //copying the role names to the list of names
+            for(int i = 0; i < upgrades.size(); i++){
+                upgrade_strs[i] = "Level " + upgrades.get(i).getLevel() + " : " + upgrades.get(i).getAmmount() + " " + upgrades.get(i).getCurrency();
+            }
+
+            String choice = view.displayUpgrades(upgrade_strs);
+
+            if(choice != null){
+                String[] choice_arr = choice.split(" ");
+                for(Upgrade upgrade : upgrades){
+                    if(upgrade.getLevel() == Integer.parseInt(choice_arr[1]) && upgrade.getCurrency().equals(choice_arr[4])){
+                        turnManager.upgradeAction(upgrade);
+                    }
+                }
+            }
+        } else {
+            displayInConsole("Can only upgrade in Casting Office");
+        }
     }
 
     //Displays the score and ends the game

@@ -21,12 +21,12 @@ public class boardMouseListener implements MouseListener{
 
         } else if(e.getSource() == view.getbRehearse()){
             controller.rehearseAction();
-            
+
         } else if(e.getSource() == view.getbTake()){
             controller.takeRoleAction();
 
         } else if(e.getSource() == view.getbUpgrade()){
-            view.printOutput("Upgrade Selected");
+            controller.upgradeAction();
 
         } else if(e.getSource() == view.getbEndGame()){
             controller.endGame();

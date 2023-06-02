@@ -287,6 +287,11 @@ public class BoardView extends JFrame{
         return choice;
     }
 
+    public String displayUpgrades(String[] upgrades){
+        String choice = (String) JOptionPane.showInputDialog(this, "Choose upgrade", "Upgrade", JOptionPane.QUESTION_MESSAGE, null, upgrades, upgrades[0]);
+        return choice;
+    }
+
     /* Accessors */
     public JButton getbAct(){
         return bAct;

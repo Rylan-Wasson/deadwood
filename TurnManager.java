@@ -194,4 +194,17 @@ public class TurnManager {
             return null;
         }
     }
+    
+    public void upgradeAction(Upgrade upgrade){
+        System.out.println("----> AYAYAYAYA");
+    }
+
+    public ArrayList<Upgrade> getUpgrades(){
+        if(lm.getLocationByID(turn.getActivePlayer().getPlayerID()) == lm.getLocationByName("office")){
+            CastingOffice office = (CastingOffice) lm.getLocationByName("office");
+            return office.getUpgrades();
+        } else {
+            return null;
+        }
+    }
 }
