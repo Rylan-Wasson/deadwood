@@ -80,14 +80,20 @@ public class GameManager {
 
 
     public void checkGameStatus(){
-        if(num_days == 0 || turn.gameOver() == true){ // game over
+        if(turn.gameOver() == true){ // game over
             scorePlayers();
             System.exit(0);
             
         } else if(gameBoard.getNumActiveScenes() <= 9){ // day over
             num_days--;
+            if(num_days == 0){ // game over
+                scorePlayers();
+                System.exit(0);
+            }
             setupDay();
             guiController.displayMessage("Days Remaining", Integer.toString(num_days)); //Days remaining popup
+            turn = new Turn(players.get(current_player_index));
+            turnManager.setTurn(turn);
 
         } else if(turn.turnActive() == false){ // turn over
             if(current_player_index == (players.size() - 1)){
