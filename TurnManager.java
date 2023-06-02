@@ -20,7 +20,7 @@ public class TurnManager {
     public void moveAction(String location){
         if(turn.getActivePlayer().getPlayerRole() == null){
             if(!turn.hasMoved()){
-                turn.hasMoved();
+                turn.updateMoved();
                 lm.updateLocation(turn.getActivePlayer().getPlayerID(), lm.getLocationByName(location)); // change location
                 controller.updatePlayerLocation(turn.getActivePlayer().getPlayerID(), lm.getLocationByName(location));
                 gm.checkGameStatus();
