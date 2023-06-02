@@ -182,6 +182,7 @@ public class BoardView extends JFrame{
         ImageIcon cIcon =  new ImageIcon(COVER_IMG);
         cardlabel.setIcon(cIcon); 
         covers.put(name, cardlabel);
+       
     }
 
     // put a cover card at desired location, naming convention is the location
@@ -189,7 +190,6 @@ public class BoardView extends JFrame{
         JLabel label = covers.get(name);
         label.setBounds(x, y, label.getIcon().getIconWidth(), label.getIcon().getIconHeight());
         label.setVisible(true);
-        label.setOpaque(true);
         bPane.add(label, (Integer) 2);
     }
 

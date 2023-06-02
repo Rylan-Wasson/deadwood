@@ -111,12 +111,12 @@ public class TurnManager {
                     // reset set/player info related to scene
                     for(int i = 0; i < players_by_location.size(); i++){
                         players_by_location.get(i).resetRoleStatus();
+                        players_by_location.get(i).setRehearse_chips(0);
                     }
 
                     controller.removeCard(set.getScene());
                     set.setScene(null);
                     lm.decrementNumScenes();
-                    
                 }
                 
             } else {
