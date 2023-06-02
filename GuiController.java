@@ -1,15 +1,15 @@
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
 /**
  * GuiController
  */
 public class GuiController {
-    private BoardView view;
+    private BoardView view = null;
     private boardMouseListener listener;
 
     public GuiController(ArrayList<Scene> scenes, ArrayList<Location> locations){
-        listener = new boardMouseListener();
+        listener = new boardMouseListener(this);
         view = new BoardView(listener);
         listener.setView(view);
         view.setVisible(true);
@@ -89,5 +89,12 @@ public class GuiController {
 
     public void displayMessage(String message){
         view.displayMessage(message);
+    }
+
+    public void endGame(){
+        int result = JOptionPane.showConfirmDialog(view, "Are you sure?", "End Game", JOptionPane.YES_NO_OPTION);
+        if(result == JOptionPane.YES_OPTION){
+            System.exit(0);
+        }
     }
 }

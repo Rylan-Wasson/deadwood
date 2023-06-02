@@ -1,9 +1,5 @@
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.border.LineBorder;
-import javax.imageio.ImageIO;
-import java.awt.event.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class BoardView extends JFrame{
@@ -101,32 +97,32 @@ public class BoardView extends JFrame{
         bRehearse = new JButton("REHEARSE");
         bRehearse.setBackground(Color.white);
         bRehearse.setBounds(icon.getIconWidth()+30,60,120, 20);
-        //bRehearse.addMouseListener(new boardMouseListener());
+        bRehearse.addMouseListener(listener);
 
         bMove = new JButton("MOVE");
         bMove.setBackground(Color.white);
         bMove.setBounds(icon.getIconWidth()+30,90,120, 20);
-        //bMove.addMouseListener(new boardMouseListener());
+        bMove.addMouseListener(listener);
 
         bTake = new JButton("TAKE ROLE");
         bTake.setBackground(Color.white);
         bTake.setBounds(icon.getIconWidth()+30,120,120, 20);
-        //bMove.addMouseListener(new boardMouseListener());
+        bTake.addMouseListener(listener);
 
         bUpgrade = new JButton("UPGRADE");
         bUpgrade.setBackground(Color.white);
         bUpgrade.setBounds(icon.getIconWidth()+30,150,120, 20);
-        //bMove.addMouseListener(new boardMouseListener());
+        bUpgrade.addMouseListener(listener);
 
         bEndTurn = new JButton("END TURN");
         bEndTurn.setBackground(Color.white);
         bEndTurn.setBounds(icon.getIconWidth()+30,180,120, 20);
-        //bMove.addMouseListener(new boardMouseListener());
+        bEndTurn.addMouseListener(listener);
 
         bEndGame = new JButton("END GAME");
         bEndGame.setBackground(Color.white);
         bEndGame.setBounds(icon.getIconWidth()+30,210,120, 20);
-        //bMove.addMouseListener(new boardMouseListener());
+        bEndGame.addMouseListener(listener);
 
 
         //player info label
