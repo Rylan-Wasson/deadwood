@@ -8,6 +8,7 @@ public class GuiController {
     private BoardView view = null;
     private boardMouseListener listener;
     private GameManager gameManager;
+    private TurnManager turnManager;
 
     public GuiController(ArrayList<Scene> scenes, ArrayList<Location> locations, GameManager gameManager){
         this.gameManager = gameManager;
@@ -17,6 +18,10 @@ public class GuiController {
         view.setVisible(true);
         createCovers(locations);
         createScenes(scenes);
+    }
+
+    public void setTurnManager(TurnManager turnManager){
+        this.turnManager = turnManager;
     }
 
     // create all scene graphical objects
@@ -30,7 +35,7 @@ public class GuiController {
     private void createCovers(ArrayList<Location> locations){
         for(int i = 0; i < locations.size(); i++){
             Location location = locations.get(i);
-            //view.addCoverCard(location.getName());
+            view.addCoverCard(location.getName());
         }
     }
 
@@ -55,8 +60,8 @@ public class GuiController {
         return view.getPlayerCount();
     }
 
-    public void initPlayers(int num_players){
-        view.buildPlayers(num_players);
+    public void initPlayers(int num_players, int starting_rank){
+        view.buildPlayers(num_players, starting_rank);
     }
 
     public void buildShots(ArrayList<Location> locations){
@@ -113,13 +118,12 @@ public class GuiController {
     public void endGame(){
         int result = JOptionPane.showConfirmDialog(view, "Are you sure?", "End Game", JOptionPane.YES_NO_OPTION);
         if(result == JOptionPane.YES_OPTION){
-            gameManager.scorePlayers();
-            System.exit(0);
+            turnManager.endGameAction();
         }
     }
 
     public void endTurn(){
-        //gameManager.endTurn();
+        turnManager.endTurnAction();
     }
 
     //Displays the score and ends the game

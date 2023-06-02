@@ -96,8 +96,7 @@ public class GameManager {
                 current_player_index++;
             }
             turn = new Turn(players.get(current_player_index));
-            //TODO update info
-            //turnManager.setTurn(turn);
+            turnManager.setTurn(turn);
             guiController.updatePlayerInfo(turn.getActivePlayer());
         }
     }
@@ -108,7 +107,7 @@ public class GameManager {
      */
     public void setupGame(){
 
-        guiController.initPlayers(num_players);
+        
         guiController.buildShots(gameBoard.getLocations());
         // Creates all the players based on player count, adds them to the players LinkedList
         for(int i = 1; i <= num_players; i++){
@@ -132,7 +131,7 @@ public class GameManager {
             }
             this.players.add(new_player);
         }
-
+        guiController.initPlayers(num_players, players.get(0).getRank());
         //Sets the day cap based on player count
         switch(num_players){
             case 2:
@@ -154,6 +153,7 @@ public class GameManager {
 
         this.turn = new Turn(players.get(current_player_index));
         this.turnManager = new TurnManager(guiController, locationManager, turn, this);
+        guiController.setTurnManager(turnManager);
     }
 
     //Sets up a new day
@@ -173,7 +173,7 @@ public class GameManager {
     }
 
     /* Calculate winner(s) of game, and announce to players */
-    public void scorePlayers(){
+    private void scorePlayers(){
         ArrayList<Player> winners = new ArrayList<Player>();
         winners.add(players.get(0)); // initialize winner
         for(int i = 1; i < players.size(); i++){ // compare scores, put winning player(s) in winners list

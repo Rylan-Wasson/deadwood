@@ -234,9 +234,9 @@ public class BoardView extends JFrame{
     }
 
     // initialization of player icons
-    public void buildPlayers(int num_players){
+    public void buildPlayers(int num_players, int starting_rank){
         for(int i = 0; i < num_players; i++){
-            String img = "./Images/"+COLORS[i]+ "1.png";
+            String img = "./Images/"+COLORS[i]+ starting_rank + ".png";
             
             JLabel playerlabel = new JLabel();
             ImageIcon pIcon = new ImageIcon(img);
