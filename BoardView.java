@@ -187,12 +187,12 @@ public class BoardView extends JFrame{
         bPane.add(bEndGame, (Integer) 2);
     }
 
-    // create graphical card object, and add to scenes
-    public void buildCard(String name, String img){
+    // create graphical card object, and add to scenes. identified by img tag
+    public void buildCard(String img){
         JLabel cardlabel = new JLabel();
         ImageIcon cIcon =  new ImageIcon("./Images/"+img);
         cardlabel.setIcon(cIcon); 
-        cards.put(name, cardlabel);
+        cards.put(img, cardlabel);
     }
 
     // put desired scene at location
@@ -244,7 +244,7 @@ public class BoardView extends JFrame{
             JLabel playerlabel = new JLabel();
             ImageIcon pIcon = new ImageIcon(img);
             playerlabel.setIcon(pIcon);
-            playerlabel.setBounds(991,248,46,46); // start players at trailers
+            playerlabel.setBounds(991 + (i * 10),248,46,46); // start players at trailers
             playerlabel.setVisible(true);
             bPane.add(playerlabel,(Integer) 3);
             players.put(i+1, playerlabel); // add player to list 
@@ -277,5 +277,17 @@ public class BoardView extends JFrame{
     public void removeShot(String name){
         JLabel label = shots.get(name);
         label.setVisible(false);
+    }
+
+    public String getPlayerCount(){
+        String input = JOptionPane.showInputDialog(boardlabel, "How Many Players?");
+        if(input == null){
+            System.exit(-1);
+        }
+        return input;
+    }
+
+    public void displayMessage(String message){
+        JOptionPane.showMessageDialog(boardlabel, message);
     }
 }

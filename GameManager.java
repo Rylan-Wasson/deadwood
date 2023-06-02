@@ -52,8 +52,26 @@ public class GameManager {
     /* ENTRY POINT TO DEADWOOD
      * playGame()
      */
-     public void playGame(int num_players){
-        setupGame(num_players);
+     public void playGame(){
+        boolean validPlayerCount = false;
+
+        //getting player count
+        while(!validPlayerCount){
+            num_players = 0;
+            try {
+                num_players = Integer.parseInt(guiController.getPlayerCount());
+            } catch (Exception e) {
+                System.exit(-1);
+            }
+
+            if(num_players >= 2 && num_players <= 8){
+                validPlayerCount = true;
+            } else {
+                guiController.displayMessage("Usage: [2,8] players!");
+            }
+        }
+
+        setupGame();
         end_game = false;
         
         while(!end_game){
@@ -88,9 +106,8 @@ public class GameManager {
      * Sets up the game, utilizes the TextController to recieve input
      * returns the id of the starting player
      */
-    public void setupGame(int num_players){
+    public void setupGame(){
 
-        setNumPlayers(num_players);
         guiController.initPlayers(num_players);
         guiController.buildShots(gameBoard.getLocations());
         // Creates all the players based on player count, adds them to the players LinkedList

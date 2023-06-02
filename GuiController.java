@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-
 /**
  * GuiController
  */
@@ -17,7 +16,7 @@ public class GuiController {
     private void createScenes(ArrayList<Scene> scenes){
         for(int i = 0; i < scenes.size(); i++){
             Scene scene = scenes.get(i);
-            view.buildCard(scene.getName(), scene.getImg());
+            view.buildCard(scene.getImg());
         }
     }
 
@@ -34,7 +33,7 @@ public class GuiController {
             Location location = locations.get(i);
             if(location instanceof Set){
                 Set set = (Set) location;
-                view.putCard(set.getScene().getName(), set.getX(), set.getY());
+                view.putCard(set.getScene().getImg(), set.getX(), set.getY());
                 view.putCoverCard(set.getName(), set.getX(), set.getY());
             }
         }
@@ -43,6 +42,10 @@ public class GuiController {
     // given player object, update gui listed info for the player
     public void updatePlayerInfo(Player player){
         view.updatePlayerInfo(player.getPlayerID(), player.getCash(), player.getCredits(), player.getRehearseChips());
+    }
+
+    public String getPlayerCount(){
+        return view.getPlayerCount();
     }
 
     public void initPlayers(int num_players){
@@ -79,5 +82,8 @@ public class GuiController {
         }
     }
 
+    public void displayMessage(String message){
+        view.displayMessage(message);
+    }
 
 }
