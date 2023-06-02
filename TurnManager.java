@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class TurnManager {
@@ -63,17 +64,54 @@ public class TurnManager {
             int budget = set.getScene().getBudget();
             
             if((roll_result + active_player.getRehearseChips()) >= budget){ //successful roll
-                controller.removeShotCounter((Set) lm.getLocationByID(active_player.getPlayerID())); // hide the shot counter
+                controller.removeShotCounter(set); // hide the shot counter
                 set.decrementShotCounters();
     
                 if(active_player.getPlayerRole().getIsMainRole()){ //is a main role
                     banker.payPlayer(active_player, 2, "credits"); 
-                    controller.displayInConsole("Sucess! you earned 2 credits");
+                    controller.displayInConsole("Success! you earned 2 credits");
                 }else{ // extra role
                     banker.payPlayer(active_player, 1, "credits");
                     banker.payPlayer(active_player, 1, "cash");
-                    controller.displayInConsole("Sucess! you earned 2 credits");
+                    controller.displayInConsole("Success! you earned 2 credits");
                 }
+
+                if(set.getNumShotCounters() == 0){ //bonus check
+                    ArrayList<Player> players_by_location = lm.getPlayersByLocation(set);
+                    ArrayList<Player> main_role_players = new ArrayList<Player>();
+                    ArrayList<Player> extra_role_players = new ArrayList<Player>();
+                    
+                    for(int i = 0; i < players_by_location.size(); i++){ //adding the players into 2 groups
+                        if(players_by_location.get(i).getPlayerRole().getIsMainRole()){
+                            main_role_players.add(players_by_location.get(i));
+                        } else {
+                            extra_role_players.add(players_by_location.get(i));
+                        }
+                    }
+                    //Sorts the players who have a main role by the rank of said role
+                    Collections.sort(main_role_players, (p1, p2) -> p1.getPlayerRole().getRank() - p2.getPlayerRole().getRank());
+                    // distribute bonuses
+                    if(main_role_players.size() > 0){
+                        banker.sceneBonus(main_role_players, budget);
+                    }
+
+                    if(extra_role_players.size() > 0){
+                        banker.extraBonus(extra_role_players);
+                    }
+                    controller.displayInConsole("Bonuses distributed!");
+                    
+                    // reset set/player info related to scene
+                    for(int i = 0; i < players_by_location.size(); i++){
+                        players_by_location.get(i).resetRoleStatus();
+                    }
+
+                    controller.removeCard(set.getScene());
+                    set.setScene(null);
+                    lm.decrementNumScenes();
+                    
+                }
+                gm.checkGameStatus();
+                controller.updatePlayerInfo(active_player);
             }
         } else {
 

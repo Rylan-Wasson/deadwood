@@ -100,6 +100,10 @@ public class GuiController {
         //TODO are these zero indexed?
     }
 
+    public void removeCard(Scene scene){
+        view.removeCard(scene.getName());
+    }
+
     public void updatePlayerLocation(int ID, Location location){
         //Offsets the player by 10 pixels based on their ID to prevent overlap of player icons
         view.updatePlayerLocation(ID, location.getX() + (ID * 10), location.getY());
