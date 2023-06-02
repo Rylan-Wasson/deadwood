@@ -7,8 +7,10 @@ import javax.swing.JOptionPane;
 public class GuiController {
     private BoardView view = null;
     private boardMouseListener listener;
+    private GameManager gameManager;
 
-    public GuiController(ArrayList<Scene> scenes, ArrayList<Location> locations){
+    public GuiController(ArrayList<Scene> scenes, ArrayList<Location> locations, GameManager gameManager){
+        this.gameManager = gameManager;
         listener = new boardMouseListener(this);
         view = new BoardView(listener);
         listener.setView(view);
@@ -46,7 +48,7 @@ public class GuiController {
 
     // given player object, update gui listed info for the player
     public void updatePlayerInfo(Player player){
-        view.updatePlayerInfo(player.getPlayerID(), player.getCash(), player.getCredits(), player.getRehearseChips());
+        view.updatePlayerInfo(player.getPlayerID(), player.getCash(), player.getCredits(), player.getRehearseChips(), player.getRank());
     }
 
     public String getPlayerCount(){
@@ -91,14 +93,26 @@ public class GuiController {
         view.updatePlayerLocation(ID, location.getX(), location.getY());
     }
 
-    public void displayMessage(String message){
-        view.displayMessage(message);
+    //Displays a popup menu
+    public void displayMessage(String title, String message){
+        view.displayMessage(title, message);
     }
 
+    //Ends the game and scores the players
     public void endGame(){
         int result = JOptionPane.showConfirmDialog(view, "Are you sure?", "End Game", JOptionPane.YES_NO_OPTION);
         if(result == JOptionPane.YES_OPTION){
+            gameManager.scorePlayers();
             System.exit(0);
         }
+    }
+
+    //Displays the score and ends the game
+    public void listWinners(ArrayList<Player> winners){
+        StringBuilder sb = new StringBuilder();
+        for(Player winner : winners){
+            sb.append("Player " + winner.getPlayerID() + ": " + winner.getScore() + " points" + "\n");
+        }
+        displayMessage("Game Score", sb.toString());
     }
 }

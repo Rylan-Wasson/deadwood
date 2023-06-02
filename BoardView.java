@@ -126,7 +126,7 @@ public class BoardView extends JFrame{
 
 
         //player info label
-        infoLabel = new JLabel("Current Player:          Money:           Credits:              Rehearse Tokens:                ");
+        infoLabel = new JLabel("Current Player:     Rank:       Money:      Credits:    Rehearse Tokens:    ");
         infoLabel.setBounds(icon.getIconWidth()/4,icon.getIconHeight()+25,600,50);
         infoLabel.setBorder(BorderFactory.createLineBorder(Color.black));
         bPane.add(infoLabel, (Integer) 2);
@@ -217,8 +217,8 @@ public class BoardView extends JFrame{
     }
 
     // update player info label with given stats
-    public void updatePlayerInfo(int id, int money, int credits, int rehearse_tokens){
-        infoLabel.setText("Current Player: "+id+"         Money: "+money+"          Credits:"+credits+"              Rehearse Tokens: "+rehearse_tokens+"               ");
+    public void updatePlayerInfo(int id, int money, int credits, int rehearse_tokens, int rank){
+        infoLabel.setText("Current Player: "+id+ "      Rank:"+rank+"       Money: "+money+"        Credits: "+credits+"    Rehearse Tokens: "+rehearse_tokens+"    ");
     }
 
     // remove card of given name from pane
@@ -278,14 +278,16 @@ public class BoardView extends JFrame{
 
     public String getPlayerCount(){
         String input = JOptionPane.showInputDialog(boardlabel, "How Many Players?");
+
+        //TODO: Better error handling here
         if(input == null){
             System.exit(-1);
         }
         return input;
     }
 
-    public void displayMessage(String message){
-        JOptionPane.showMessageDialog(boardlabel, message);
+    public void displayMessage(String title ,String message){
+        JOptionPane.showMessageDialog(boardlabel, message, title, JOptionPane.PLAIN_MESSAGE);
     }
 
     // update player die icon based on level
@@ -295,7 +297,6 @@ public class BoardView extends JFrame{
         ImageIcon icon =  new ImageIcon(img);
         player.setIcon(icon);
     }
-
 
     /* Accessors */
     public JButton getbAct(){

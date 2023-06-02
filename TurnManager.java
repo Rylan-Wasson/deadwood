@@ -17,10 +17,9 @@ public class TurnManager {
                 lm.updateLocation(turn.getActivePlayer().getPlayerID(), lm.getLocationByName(location)); // change location
                 controller.updatePlayerLocation(turn.getActivePlayer().getPlayerID(), lm.getLocationByName(location));
             } else {
-                controller.displayMessage("Already Moved");
+                controller.displayMessage("Invalid Action", "Already Moved");
             }
-        }
-            
+        }    
     }
 
     public void setTurn(Turn turn){

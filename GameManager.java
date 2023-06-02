@@ -21,7 +21,7 @@ public class GameManager {
         this.gameBoard = new GameBoard(xmlParser.parseBoardXML());
         this.scenes = xmlParser.parseCardsXML();
         this.locationManager = new LocationManager(gameBoard, this);
-        this.guiController = new GuiController(scenes, gameBoard.getLocations());
+        this.guiController = new GuiController(scenes, gameBoard.getLocations(), this);
     }
 
     public int getNumDays(){
@@ -60,18 +60,23 @@ public class GameManager {
             num_players = 0;
             try {
                 num_players = Integer.parseInt(guiController.getPlayerCount());
+                if(num_players >= 2 && num_players <= 8){
+                    validPlayerCount = true;
+                } else {
+                    guiController.displayMessage("Invalid Player Count!", "Usage: 2 - 8 players");
+                }
             } catch (Exception e) {
-                System.exit(-1);
-            }
-
-            if(num_players >= 2 && num_players <= 8){
-                validPlayerCount = true;
-            } else {
-                guiController.displayMessage("Usage: [2,8] players!");
+                guiController.displayMessage("Invalid Input", "Usage: 2 - 8 players");
             }
         }
 
         setupGame();
+
+        //update the player info label
+        guiController.updatePlayerInfo(turn.getActivePlayer());
+
+        // guiController.displayMessage("Days Remaining", Integer.toString(num_days)); //Days remaining popup
+
         end_game = false;
      }
 
@@ -92,6 +97,7 @@ public class GameManager {
             }
             turn = new Turn(players.get(current_player_index));
             //TODO update info
+            guiController.updatePlayerInfo(turn.getActivePlayer());
         }
     }
 
@@ -159,7 +165,7 @@ public class GameManager {
     }
 
     /* Calculate winner(s) of game, and announce to players */
-    private void scorePlayers(){
+    public void scorePlayers(){
         ArrayList<Player> winners = new ArrayList<Player>();
         winners.add(players.get(0)); // initialize winner
         for(int i = 1; i < players.size(); i++){ // compare scores, put winning player(s) in winners list
@@ -171,7 +177,7 @@ public class GameManager {
                 winners.add(cur);
             }
         }
-        //textController.listWinners(winners);
+       guiController.listWinners(winners);
     }
 
     /*
