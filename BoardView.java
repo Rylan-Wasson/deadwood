@@ -154,36 +154,10 @@ public class BoardView extends JFrame{
         bPane.add(bUpgrade, (Integer) 2);
         bPane.add(bEndTurn, (Integer) 2);
         bPane.add(bEndGame, (Integer) 2);
-        hideActions();
-        
-        listActions();
     }
 
     public void printOutput(String output){
         tArea.append(output+"\n");
-    }
-
-    public void hideActions(){
-        bPane.remove(mLabel);
-        bPane.remove(bAct);
-        bPane.remove(bRehearse);
-        bPane.remove(bMove);
-        bPane.remove(bTake);
-        bPane.remove(bUpgrade);
-        bPane.remove(bEndTurn);
-        bPane.remove(bEndGame);
-
-    }
-
-    public void listActions(){
-        bPane.add(mLabel,(Integer) 2);
-        bPane.add(bAct, (Integer) 2);
-        bPane.add(bRehearse, (Integer) 2);
-        bPane.add(bMove, (Integer) 2);
-        bPane.add(bTake, (Integer) 2);
-        bPane.add(bUpgrade, (Integer) 2);
-        bPane.add(bEndTurn, (Integer) 2);
-        bPane.add(bEndGame, (Integer) 2);
     }
 
     // create graphical card object, and add to scenes. identified by img tag
@@ -214,7 +188,7 @@ public class BoardView extends JFrame{
     public void putCoverCard(String name, int x, int y){
         JLabel label = covers.get(name);
         label.setBounds(x, y, label.getIcon().getIconWidth(), label.getIcon().getIconHeight());
-        label.setOpaque(true);
+        label.setVisible(true);
         bPane.add(label, (Integer) 2);
     }
 
@@ -232,7 +206,7 @@ public class BoardView extends JFrame{
     // remove cover of given name from pane (location name)
     public void removeCoverCard(String name){
         JLabel cover = covers.get(name);
-        bPane.remove(cover);
+        cover.setVisible(false);
     }
 
     

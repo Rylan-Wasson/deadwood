@@ -23,6 +23,7 @@ public class TurnManager {
                 turn.updateMoved();
                 lm.updateLocation(turn.getActivePlayer().getPlayerID(), lm.getLocationByName(location)); // change location
                 controller.updatePlayerLocation(turn.getActivePlayer().getPlayerID(), lm.getLocationByName(location));
+                controller.removeCover(lm.getLocationByID(turn.getActivePlayer().getPlayerID()));
                 // TODO remove cover cards
                 gm.checkGameStatus();
             } else {
@@ -47,6 +48,7 @@ public class TurnManager {
                     } else { // extra role
                         controller.updatePlayerExtraRole(ID, role);
                     }
+                    turn.turnEnd();
                     gm.checkGameStatus();
                 } else { // insufficient rank
                     controller.displayInConsole("Invalid Action: Your rank is too low!");
@@ -78,7 +80,7 @@ public class TurnManager {
                 }else{ // extra role
                     banker.payPlayer(active_player, 1, "credits");
                     banker.payPlayer(active_player, 1, "cash");
-                    controller.displayInConsole("Success! you earned 2 credits");
+                    controller.displayInConsole("Success! you earned 1 credit and 1 dollar!");
                 }
 
                 if(set.getNumShotCounters() == 0){ //bonus check
@@ -87,10 +89,12 @@ public class TurnManager {
                     ArrayList<Player> extra_role_players = new ArrayList<Player>();
                     
                     for(int i = 0; i < players_by_location.size(); i++){ //adding the players into 2 groups
-                        if(players_by_location.get(i).getPlayerRole().getIsMainRole()){
-                            main_role_players.add(players_by_location.get(i));
-                        } else {
-                            extra_role_players.add(players_by_location.get(i));
+                        if(players_by_location.get(i).getPlayerRole() != null){
+                            if(players_by_location.get(i).getPlayerRole().getIsMainRole()){
+                                main_role_players.add(players_by_location.get(i));
+                            } else {
+                                extra_role_players.add(players_by_location.get(i));
+                            }
                         }
                     }
                     //Sorts the players who have a main role by the rank of said role
@@ -115,10 +119,13 @@ public class TurnManager {
                     lm.decrementNumScenes();
                     
                 }
-                turn.turnEnd();
-                gm.checkGameStatus();
-                controller.updatePlayerInfo(active_player);
+                
+            } else {
+                controller.displayInConsole("Roll Failed!");
             }
+
+            turn.turnEnd();
+            gm.checkGameStatus();
         } else {
             controller.displayInConsole("Invalid action: You're not currently working a role!");
         }

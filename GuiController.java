@@ -97,11 +97,14 @@ public class GuiController {
     public void removeShotCounter(Set set){
         String shot = set.getName()+""+set.getNumShotCounters();
         view.removeShot(shot);
-        //TODO are these zero indexed?
     }
 
-    public void removeCard(Scene scene){
-        view.removeCard(scene.getName());
+    public void removeCard(Scene scene){    
+        view.removeCard(scene.getImg());
+    }
+
+    public void removeCover(Location location){
+        view.removeCoverCard(location.getName());
     }
 
     public void updatePlayerLocation(int ID, Location location){

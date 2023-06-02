@@ -64,6 +64,7 @@ public class XmlParser {
                             for(int v = 0; v < take_nodes.getLength(); v++){ //iterate through takes
                                 Node take = take_nodes.item(v);
                                 if(take.getNodeType() == Node.ELEMENT_NODE){
+                                    max_shot_counters++;
                                     Element takeElement = (Element) take;
                                     int num = Integer.parseInt(takeElement.getAttribute("number"));
                                     Element area_element = (Element) take.getChildNodes().item(0);

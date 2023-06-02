@@ -18,10 +18,13 @@ public class Player {
 
     /* Resets all fields tied to the current role */
     public void resetRoleStatus(){
-        this.player_role.setTaken(false);
-        this.rehearse_chips = 0;
-        this.player_role = null;
+        if(player_role != null){
+            this.player_role.setTaken(false);
+            this.rehearse_chips = 0;
+            this.player_role = null;
+        }
     }
+
 
     // ----- accessors -----
 
