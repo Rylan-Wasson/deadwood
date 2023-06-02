@@ -20,7 +20,7 @@ public class boardMouseListener implements MouseListener{
             controller.moveAction();
 
         } else if(e.getSource() == view.getbRehearse()){
-
+            controller.rehearseAction();
         } else if(e.getSource() == view.getbTake()){
             controller.takeRoleAction();
 
