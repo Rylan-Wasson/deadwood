@@ -9,8 +9,9 @@ public class GuiController {
     private boardMouseListener listener;
 
     public GuiController(ArrayList<Scene> scenes, ArrayList<Location> locations){
-        listener = new boardMouseListener(view);
+        listener = new boardMouseListener();
         view = new BoardView(listener);
+        listener.setView(view);
         view.setVisible(true);
         createCovers(locations);
         createScenes(scenes);
@@ -89,10 +90,4 @@ public class GuiController {
     public void displayMessage(String message){
         view.displayMessage(message);
     }
-
-    public void getAction(){
-        listener.mouseClicked(null);
-    }
- 
-
 }
