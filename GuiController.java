@@ -139,16 +139,41 @@ public class GuiController {
     public void moveAction(){
         //get list of valid locations
         ArrayList<String> adjacent_locations = turnManager.getAdjacentLocations();
+
         //signal popup & wait for choice
         String choice = view.displayLocations(adjacent_locations);
         if(choice != null){
             turnManager.moveAction(choice);
         } else {
             displayInConsole("Nothing selected");
-        }
-        //updated turn is    
+        }    
     }
- 
+    
+    public void takeRoleAction(){
+        ArrayList<Role> roles = turnManager.getAvailableRoles();
+        if(roles != null){
+            //list of role names
+            String[] role_names = new String[roles.size()];
+
+            //copying the role names to the list of names
+            for(int i = 0; i < roles.size(); i++){
+                role_names[i] = roles.get(i).getName();
+            }
+
+            String choice = view.displayRoles(role_names);
+
+            if(choice != null){
+                for(Role role : roles){
+                    if(role.getName().equals(choice)){
+                        turnManager.takeRoleAction(role);
+                    }
+                }
+            }
+        } else {
+            displayInConsole("No Roles at this location");
+        }
+
+    }
 
     public void endTurn(){
         turnManager.endTurnAction();

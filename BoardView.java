@@ -303,7 +303,12 @@ public class BoardView extends JFrame{
     }
 
     public String displayLocations(ArrayList<String> locations){
-        String choice = (String) JOptionPane.showInputDialog(this, "Choose location", "Valid Locations", JOptionPane.QUESTION_MESSAGE, null, locations.toArray(), locations.get(0));
+        String choice = (String) JOptionPane.showInputDialog(this, "Choose location", "Locations", JOptionPane.QUESTION_MESSAGE, null, locations.toArray(), locations.get(0));
+        return choice;
+    }
+
+    public String displayRoles(String[] role_names){
+        String choice = (String) JOptionPane.showInputDialog(this, "Choose role", "Roles", JOptionPane.QUESTION_MESSAGE, null, role_names, role_names[0]);
         return choice;
     }
 

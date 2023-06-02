@@ -17,24 +17,21 @@ public class boardMouseListener implements MouseListener{
             view.printOutput("Act Selected");
 
         } else if(e.getSource() == view.getbMove()){
-            view.printOutput("Move Selected");
             controller.moveAction();
 
         } else if(e.getSource() == view.getbRehearse()){
             view.printOutput("Rehearse Selected");
 
         } else if(e.getSource() == view.getbTake()){
-            view.printOutput("Take role Selected");
+            controller.takeRoleAction();
 
         } else if(e.getSource() == view.getbUpgrade()){
             view.printOutput("Upgrade Selected");
 
         } else if(e.getSource() == view.getbEndGame()){
-            view.printOutput("End game Selected");
             controller.endGame();
 
         } else if(e.getSource() == view.getbEndTurn()){
-            view.printOutput("End turn Selected");
             controller.endTurn();
 
         }
