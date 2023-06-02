@@ -14,13 +14,12 @@ public class boardMouseListener implements MouseListener{
 
         //Action button events
         if (e.getSource()== view.getbAct()){
-            view.printOutput("Act Selected");
+            controller.actAction();
 
         } else if(e.getSource() == view.getbMove()){
             controller.moveAction();
 
         } else if(e.getSource() == view.getbRehearse()){
-            view.printOutput("Rehearse Selected");
 
         } else if(e.getSource() == view.getbTake()){
             controller.takeRoleAction();

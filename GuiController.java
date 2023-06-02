@@ -148,6 +148,10 @@ public class GuiController {
             displayInConsole("Nothing selected");
         }    
     }
+
+    public void actAction(){
+        turnManager.actRoleAction();
+    }
     
     public void takeRoleAction(){
         ArrayList<Role> roles = turnManager.getAvailableRoles();
