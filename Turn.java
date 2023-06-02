@@ -21,11 +21,19 @@ public class Turn {
         has_upgraded = true;
     }
 
+    public void turnEnd(){
+        turn_active = false;
+    }
+
+    public void endGame(){
+        end_game = true;
+    }
+
     public Player getActivePlayer() {
         return active_player;
     }
 
-    public Boolean gameOver(){
+    public boolean gameOver(){
         return end_game;
     }
 
@@ -40,4 +48,5 @@ public class Turn {
     public boolean hasUpgraded(){
         return has_upgraded;
     }
+
 }
