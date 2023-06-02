@@ -189,6 +189,7 @@ public class BoardView extends JFrame{
         JLabel label = covers.get(name);
         label.setBounds(x, y, label.getIcon().getIconWidth(), label.getIcon().getIconHeight());
         label.setVisible(true);
+        label.setOpaque(true);
         bPane.add(label, (Integer) 2);
     }
 

@@ -24,7 +24,6 @@ public class TurnManager {
                 lm.updateLocation(turn.getActivePlayer().getPlayerID(), lm.getLocationByName(location)); // change location
                 controller.updatePlayerLocation(turn.getActivePlayer().getPlayerID(), lm.getLocationByName(location));
                 controller.removeCover(lm.getLocationByID(turn.getActivePlayer().getPlayerID()));
-                // TODO remove cover cards
                 gm.checkGameStatus();
             } else {
                 controller.displayInConsole("Invalid Action: Already Moved");
@@ -177,8 +176,16 @@ public class TurnManager {
         if(location instanceof Set){ // check if location is a set
             Set set = (Set) location;
             if(set.getScene() != null){ // check for an active scene
-                ArrayList<Role> ret_list = set.getExtraRoles(); // combine all roles into a set, return
-                ret_list.addAll(set.getScene().getRoles());
+                ArrayList<Role> main = set.getScene().getRoles();
+                ArrayList<Role> extra = set.getExtraRoles();
+                ArrayList<Role> ret_list = new ArrayList<Role>();
+                for(int i = 0; i < main.size(); i++){
+                    ret_list.add(main.get(i));
+                }
+
+                for(int i = 0; i < extra.size(); i++){
+                    ret_list.add(extra.get(i));
+                }   
                 return ret_list;
             } else {
                 return null;
