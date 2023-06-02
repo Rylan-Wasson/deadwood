@@ -157,12 +157,13 @@ public class GuiController {
     }
 
     public void rehearseAction(){
-        //implement
+        turnManager.rehearseAction();
     }
     
     public void takeRoleAction(){
         ArrayList<Role> roles = turnManager.getAvailableRoles();
         if(roles != null){
+
             //list of role names
             String[] role_names = new String[roles.size()];
 
@@ -196,6 +197,6 @@ public class GuiController {
         for(Player winner : winners){
             sb.append("Player " + winner.getPlayerID() + ": " + winner.getScore() + " points" + "\n");
         }
-        displayMessage("Game Score", sb.toString());
+        displayMessage("Winners", sb.toString());
     }
 }

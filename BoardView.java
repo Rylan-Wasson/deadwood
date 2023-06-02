@@ -255,7 +255,7 @@ public class BoardView extends JFrame{
     }
 
     public String getPlayerCount(){
-        String input = JOptionPane.showInputDialog(boardlabel, "How Many Players?");
+        String input = JOptionPane.showInputDialog(boardlabel, "Enter player count", "Player count", JOptionPane.QUESTION_MESSAGE);
 
         //TODO: Better error handling here
         if(input == null){
