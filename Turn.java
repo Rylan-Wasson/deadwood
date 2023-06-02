@@ -25,6 +25,10 @@ public class Turn {
         turn_active = false;
     }
 
+    public void setUpgraded(){
+        has_upgraded = true;
+    }
+
     public void endGame(){
         end_game = true;
     }

@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.plaf.metal.MetalBorders.PaletteBorder;
+
 public class GameManager {
     private int num_days;
     private int num_players;
@@ -142,6 +144,10 @@ public class GameManager {
         switch(num_players){
             case 2:
                 setNumDays(3);
+                
+                //TODO: REMOVE AFTER TESTING
+                players.get(0).setCash(100);
+                players.get(0).setCredits(100);
                 break;
             case 3:
                 setNumDays(3);

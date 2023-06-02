@@ -194,9 +194,24 @@ public class TurnManager {
             return null;
         }
     }
-    
+
     public void upgradeAction(Upgrade upgrade){
-        System.out.println("----> AYAYAYAYA");
+
+        Player active_player = turn.getActivePlayer();
+
+        if(upgrade.getLevel() > active_player.getRank() && !turn.hasUpgraded()){
+            if(banker.removeFunds(active_player, upgrade.getAmmount(), upgrade.getCurrency()) == 0){
+                active_player.setRank(upgrade.getLevel());
+                controller.updatePlayerInfo(active_player);
+                turn.setUpgraded();
+                controller.updatePlayerIcon(active_player);
+                gm.checkGameStatus();
+            } else {
+                controller.displayInConsole("Invalid Funds");
+            }
+        } else {
+            controller.displayInConsole("You have upgraded already/cannot downgrade");
+        }
     }
 
     public ArrayList<Upgrade> getUpgrades(){

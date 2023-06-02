@@ -59,6 +59,10 @@ public class GuiController {
         view.updatePlayerInfo(player.getPlayerID(), player.getCash(), player.getCredits(), player.getRehearseChips(), player.getRank());
     }
 
+    public void updatePlayerIcon(Player player){
+        view.updatePlayerLevel(player.getPlayerID(), player.getRank());
+    }
+
     public String getPlayerCount(){
         return view.getPlayerCount();
     }
