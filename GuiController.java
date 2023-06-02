@@ -90,7 +90,8 @@ public class GuiController {
     }
 
     public void updatePlayerLocation(int ID, Location location){
-        view.updatePlayerLocation(ID, location.getX(), location.getY());
+        //Offsets the player by 10 pixels based on their ID to prevent overlap of player icons
+        view.updatePlayerLocation(ID, location.getX() + (ID * 10), location.getY());
     }
 
     //Displays a popup menu
@@ -105,6 +106,10 @@ public class GuiController {
             gameManager.scorePlayers();
             System.exit(0);
         }
+    }
+
+    public void endTurn(){
+        //gameManager.endTurn();
     }
 
     //Displays the score and ends the game

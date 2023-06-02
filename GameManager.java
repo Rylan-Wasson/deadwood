@@ -85,10 +85,12 @@ public class GameManager {
     private void checkGameStatus(){
         if(num_days == 0 || turn.gameOver() == true){ // game over
             scorePlayers();
-            // TODO end game
+            System.exit(0);
+            
         } else if(gameBoard.getNumActiveScenes() <= 1){ // day over
             num_days--;
-            //TODO move players
+            setupDay();
+
         } else if(turn.turnActive() == false){ // turn over
             if(current_player_index == (players.size() - 1)){
                 current_player_index = 0;
@@ -103,8 +105,7 @@ public class GameManager {
 
     /*
      * setupGame()
-     * Sets up the game, utilizes the TextController to recieve input
-     * returns the id of the starting player
+     * Sets up the game, utilizes the GuiController to recieve input
      */
     public void setupGame(){
 
@@ -158,10 +159,18 @@ public class GameManager {
 
     //Sets up a new day
     private void setupDay(){
+
+        //update locationManager with new player locations
         locationManager.moveAllPlayers(players, gameBoard.getLocationByName("Trailer"));
+        //update the gui for new player locations
+        for(Player player : players){
+            guiController.updatePlayerLocation(player.getPlayerID(), locationManager.getLocationByName("Trailer"));
+        }
+        
         gameBoard.distributeScenes(scenes);
         guiController.distributeScenes(gameBoard.getLocations());
         guiController.distributeShotCounters(gameBoard.getLocations());
+        
     }
 
     /* Calculate winner(s) of game, and announce to players */

@@ -34,6 +34,7 @@ public class boardMouseListener implements MouseListener{
 
         } else if(e.getSource() == view.getbEndTurn()){
             view.printOutput("End turn Selected");
+            controller.endTurn();
 
         }
     }
