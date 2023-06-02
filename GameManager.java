@@ -74,15 +74,12 @@ public class GameManager {
 
         //update the player info label
         guiController.updatePlayerInfo(turn.getActivePlayer());
-
-        // guiController.displayMessage("Days Remaining", Integer.toString(num_days)); //Days remaining popup
-
         end_game = false;
      }
 
 
 
-    private void checkGameStatus(){
+    public void checkGameStatus(){
         if(num_days == 0 || turn.gameOver() == true){ // game over
             scorePlayers();
             System.exit(0);
@@ -90,6 +87,7 @@ public class GameManager {
         } else if(gameBoard.getNumActiveScenes() <= 1){ // day over
             num_days--;
             setupDay();
+            guiController.displayMessage("Days Remaining", Integer.toString(num_days)); //Days remaining popup
 
         } else if(turn.turnActive() == false){ // turn over
             if(current_player_index == (players.size() - 1)){
@@ -99,6 +97,7 @@ public class GameManager {
             }
             turn = new Turn(players.get(current_player_index));
             //TODO update info
+            //turnManager.setTurn(turn);
             guiController.updatePlayerInfo(turn.getActivePlayer());
         }
     }
@@ -154,7 +153,7 @@ public class GameManager {
         current_player_index = 0;
 
         this.turn = new Turn(players.get(current_player_index));
-        this.turnManager = new TurnManager(guiController, locationManager, turn);
+        this.turnManager = new TurnManager(guiController, locationManager, turn, this);
     }
 
     //Sets up a new day

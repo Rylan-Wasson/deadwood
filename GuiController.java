@@ -30,7 +30,7 @@ public class GuiController {
     private void createCovers(ArrayList<Location> locations){
         for(int i = 0; i < locations.size(); i++){
             Location location = locations.get(i);
-            view.addCoverCard(location.getName());
+            //view.addCoverCard(location.getName());
         }
     }
 
@@ -92,6 +92,16 @@ public class GuiController {
     public void updatePlayerLocation(int ID, Location location){
         //Offsets the player by 10 pixels based on their ID to prevent overlap of player icons
         view.updatePlayerLocation(ID, location.getX() + (ID * 10), location.getY());
+    }
+
+    // move player icon to given role position, location is needed for relative coordinates
+    public void updatePlayerMainRole(int ID, Role role, Location location){
+        view.updatePlayerLocation(ID, location.getX() + role.getX(), location.getY() + role.getY());
+    }
+
+    // move player icon to given role position (extra roles only)
+    public void updatePlayerExtraRole(int ID, Role role){
+        view.updatePlayerLocation(ID, role.getX(), role.getY());
     }
 
     //Displays a popup menu
