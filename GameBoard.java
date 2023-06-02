@@ -23,7 +23,6 @@ public class GameBoard {
 
     public void distributeScenes(ArrayList<Scene> scenes){
         Collections.shuffle(scenes);
-
         for(int i = 0; i < locations.size(); i++){
             Location location = locations.get(i);
             if(location instanceof Set){

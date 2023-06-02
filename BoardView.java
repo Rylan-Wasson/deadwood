@@ -35,10 +35,11 @@ public class BoardView extends JFrame{
 
     // Misc
     JTextArea tArea;
+    boardMouseListener listener;
 
-
-    public BoardView(){
+    public BoardView(boardMouseListener listener){
         super("Deadwood");
+        this.listener = listener;
         cards = new HashMap<>();
         covers = new HashMap<>();
         players = new HashMap<>();
@@ -95,7 +96,7 @@ public class BoardView extends JFrame{
         bAct = new JButton("ACT");
         bAct.setBackground(Color.white);
         bAct.setBounds(icon.getIconWidth()+30, 30,120, 20);
-        //bAct.addMouseListener(new boardMouseListener());
+        bAct.addMouseListener(listener);
 
         bRehearse = new JButton("REHEARSE");
         bRehearse.setBackground(Color.white);
@@ -289,5 +290,43 @@ public class BoardView extends JFrame{
 
     public void displayMessage(String message){
         JOptionPane.showMessageDialog(boardlabel, message);
+    }
+
+    // update player die icon based on level
+    public void updatePlayerLevel(int ID, int level){
+        JLabel player = players.get(ID);
+        String img = "./Images/"+COLORS[ID-1]+""+ level+".png";
+        ImageIcon icon =  new ImageIcon(img);
+        player.setIcon(icon);
+    }
+
+
+    /* Accessors */
+    public JButton getbAct(){
+        return bAct;
+    }
+
+    public JButton getbRehearse() {
+        return bRehearse;
+    }
+
+    public JButton getbMove() {
+        return bMove;
+    }
+
+    public JButton getbTake() {
+        return bTake;
+    }
+
+    public JButton getbEndTurn() {
+        return bEndTurn;
+    }
+
+    public JButton getbEndGame() {
+        return bEndGame;
+    }
+
+    public JButton getbUpgrade() {
+        return bUpgrade;
     }
 }

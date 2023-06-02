@@ -1,12 +1,16 @@
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 /**
  * GuiController
  */
 public class GuiController {
     private BoardView view;
+    private boardMouseListener listener;
 
     public GuiController(ArrayList<Scene> scenes, ArrayList<Location> locations){
-        view = new BoardView();
+        listener = new boardMouseListener(view);
+        view = new BoardView(listener);
         view.setVisible(true);
         createCovers(locations);
         createScenes(scenes);
@@ -85,5 +89,10 @@ public class GuiController {
     public void displayMessage(String message){
         view.displayMessage(message);
     }
+
+    public void getAction(){
+        listener.mouseClicked(null);
+    }
+ 
 
 }

@@ -7,7 +7,7 @@
 //     private Boolean has_moved;
 //     private Boolean has_upgraded;
 //     private Player active_player;
-//     private TextController controller;
+//     private GuiController controller;
 //     private LocationManager lm;
 //     private boolean end_game;
 //     private Banker banker;
@@ -30,7 +30,6 @@
 //         has_upgraded = false;
 
 //         while(turn_active && !end_game){
-//             controller.listActions();
 //             String action = controller.getAction();
 //             switch (action) {
 //                 case "end turn":
