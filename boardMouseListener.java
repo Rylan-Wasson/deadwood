@@ -3,8 +3,12 @@ import java.awt.event.MouseListener;
 
 public class boardMouseListener implements MouseListener{
     private BoardView view;
-
+    private String action;
     
+    public boardMouseListener(){
+        action = "";
+    }
+
     public void mouseClicked(MouseEvent e) {
         if (e.getSource()== view.getbAct()){
            System.out.println("Acting is Selected\n");

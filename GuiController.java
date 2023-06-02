@@ -87,6 +87,10 @@ public class GuiController {
         }
     }
 
+    public void updatePlayerLocation(int ID, Location location){
+        view.updatePlayerLocation(ID, location.getX(), location.getY());
+    }
+
     public void displayMessage(String message){
         view.displayMessage(message);
     }
