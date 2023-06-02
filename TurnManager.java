@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Random;
 
 public class TurnManager {
@@ -23,10 +24,10 @@ public class TurnManager {
                 controller.updatePlayerLocation(turn.getActivePlayer().getPlayerID(), lm.getLocationByName(location));
                 gm.checkGameStatus();
             } else {
-                controller.displayMessage("Invalid Action", "Already Moved");
+                controller.displayInConsole("Invalid Action: Already Moved");
             } 
         } else {
-            controller.displayMessage("Invalid Action", "You're currently working a role!");
+            controller.displayInConsole("Invalid Action: You're currently working a role!");
         }   
     }
 
@@ -45,10 +46,10 @@ public class TurnManager {
                 }
                 gm.checkGameStatus();
             } else { // insufficient rank
-                controller.displayMessage("Invalid Action", "Your rank is too low!");
+                controller.displayInConsole("Invalid Action: Your rank is too low!");
             }
         } else { // role already taken
-            controller.displayMessage("Invalid Action", "That role is already taken!");
+            controller.displayInConsole("Invalid Action: That role is already taken!");
         }
     }
 
@@ -62,14 +63,16 @@ public class TurnManager {
             int budget = set.getScene().getBudget();
             
             if((roll_result + active_player.getRehearseChips()) >= budget){ //successful roll
+                controller.removeShotCounter((Set) lm.getLocationByID(active_player.getPlayerID())); // hide the shot counter
                 set.decrementShotCounters();
-                controller.
     
                 if(active_player.getPlayerRole().getIsMainRole()){ //is a main role
-                    banker.payPlayer(active_player, 2, "credits");
+                    banker.payPlayer(active_player, 2, "credits"); 
+                    controller.displayInConsole("Sucess! you earned 2 credits");
                 }else{ // extra role
                     banker.payPlayer(active_player, 1, "credits");
                     banker.payPlayer(active_player, 1, "cash");
+                    controller.displayInConsole("Sucess! you earned 2 credits");
                 }
             }
         } else {
@@ -87,7 +90,17 @@ public class TurnManager {
         gm.checkGameStatus();
     }
 
+    public Turn getTurn(){
+        return turn;
+    }
+
     public void setTurn(Turn turn){
         this.turn = turn;
+    }
+
+    public ArrayList<String> getAdjacentLocations(){
+        int ID = turn.getActivePlayer().getPlayerID();
+        ArrayList<String> adj_locations = lm.getLocationByID(ID).getAdjacentLocations();
+        return adj_locations;
     }
 }

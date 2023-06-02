@@ -120,7 +120,7 @@ public class GuiController {
         view.displayMessage(title, message);
     }
 
-    public void diplayInConsole(String output){
+    public void displayInConsole(String output){
         view.printOutput("output");
     }
 
