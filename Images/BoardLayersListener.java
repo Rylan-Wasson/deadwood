@@ -139,6 +139,6 @@ public class BoardLayersListener extends JFrame {
     board.setVisible(true);
     
     // Take input from the user about number of players
-    JOptionPane.showInputDialog(board, "How many players?"); 
+    JOptionPane.showInputDialog("How many players?"); 
   }
 }
