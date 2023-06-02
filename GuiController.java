@@ -94,6 +94,12 @@ public class GuiController {
         }
     }
 
+    public void removeShotCounter(Set set){
+        String shot = set.getName()+""+set.getNumShotCounters();
+        view.removeShot(shot);
+        //TODO are these zero indexed?
+    }
+
     public void updatePlayerLocation(int ID, Location location){
         //Offsets the player by 10 pixels based on their ID to prevent overlap of player icons
         view.updatePlayerLocation(ID, location.getX() + (ID * 10), location.getY());

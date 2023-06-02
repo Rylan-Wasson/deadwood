@@ -233,6 +233,8 @@ public class BoardView extends JFrame{
         bPane.remove(cover);
     }
 
+    
+
     // initialization of player icons
     public void buildPlayers(int num_players, int starting_rank){
         for(int i = 0; i < num_players; i++){
