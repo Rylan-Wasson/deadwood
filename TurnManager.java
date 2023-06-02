@@ -23,6 +23,7 @@ public class TurnManager {
                 turn.updateMoved();
                 lm.updateLocation(turn.getActivePlayer().getPlayerID(), lm.getLocationByName(location)); // change location
                 controller.updatePlayerLocation(turn.getActivePlayer().getPlayerID(), lm.getLocationByName(location));
+                // TODO remove cover cards
                 gm.checkGameStatus();
             } else {
                 controller.displayInConsole("Invalid Action: Already Moved");
@@ -33,24 +34,28 @@ public class TurnManager {
     }
 
     public void takeRoleAction(Role role){
-        if(!role.isTaken()){ //check that role is not already taken
-            if(turn.getActivePlayer().getRank() >= role.getRank()){ //check that player has sufficient rank
-                turn.getActivePlayer().setPlayerRole(role);
-                role.setTaken(true);
+        if(turn.getActivePlayer().getPlayerRole() == null){ // check that player is not already working
+            if(!role.isTaken()){ //check that role is not already taken
+                if(turn.getActivePlayer().getRank() >= role.getRank()){ //check that player has sufficient rank
+                    turn.getActivePlayer().setPlayerRole(role);
+                    role.setTaken(true);
 
-                // update player icon location
-                int ID = turn.getActivePlayer().getPlayerID();
-                if(role.getIsMainRole()){ // main role
-                    controller.updatePlayerMainRole(ID, role, lm.getLocationByID(ID));
-                } else { // extra role
-                    controller.updatePlayerExtraRole(ID, role);
+                    // update player icon location
+                    int ID = turn.getActivePlayer().getPlayerID();
+                    if(role.getIsMainRole()){ // main role
+                        controller.updatePlayerMainRole(ID, role, lm.getLocationByID(ID));
+                    } else { // extra role
+                        controller.updatePlayerExtraRole(ID, role);
+                    }
+                    gm.checkGameStatus();
+                } else { // insufficient rank
+                    controller.displayInConsole("Invalid Action: Your rank is too low!");
                 }
-                gm.checkGameStatus();
-            } else { // insufficient rank
-                controller.displayInConsole("Invalid Action: Your rank is too low!");
+            } else { // role already taken
+                controller.displayInConsole("Invalid Action: That role is already taken!");
             }
-        } else { // role already taken
-            controller.displayInConsole("Invalid Action: That role is already taken!");
+        } else { // already working
+            controller.displayInConsole("Invalid Action: You're already working a role!");
         }
     }
 
@@ -115,7 +120,21 @@ public class TurnManager {
                 controller.updatePlayerInfo(active_player);
             }
         } else {
+            controller.displayInConsole("Invalid action: You're not currently working a role!");
+        }
+    }
 
+    /* Give the player a rehearse chip */
+    public void rehearseAction(){
+        Player active_player = turn.getActivePlayer();
+        if(active_player.getPlayerRole()!=null){ // check that player is working a role
+            banker.payPlayer(active_player, 1, "rehearse_chips");
+            controller.displayInConsole("Chip recieved!");
+            controller.updatePlayerInfo(active_player);
+            turn.turnEnd();
+            gm.checkGameStatus();
+        } else {
+            controller.displayInConsole("Invalid action: Not currently working a role!");
         }
     }
 
@@ -137,12 +156,14 @@ public class TurnManager {
         this.turn = turn;
     }
 
+    // get active players adjacent locations
     public ArrayList<String> getAdjacentLocations(){
         int ID = turn.getActivePlayer().getPlayerID();
         ArrayList<String> adj_locations = lm.getLocationByID(ID).getAdjacentLocations();
         return adj_locations;
     }
 
+    // get roles available at active players postion
     public ArrayList<Role> getAvailableRoles(){
         Player player = turn.getActivePlayer();
         Location location = lm.getLocationByID(player.getPlayerID());
