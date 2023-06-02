@@ -10,10 +10,11 @@ public class GameManager {
     private GameBoard gameBoard;
     private GuiController guiController;
     private LocationManager locationManager;
-    //private TurnManager turnManager;
+    private TurnManager turnManager;
     private boolean end_game;
     private ArrayList<Scene> scenes;
     private int current_player_index;
+    private Turn turn;
 
     public GameManager(){
         this.xmlParser = new XmlParser();
@@ -21,7 +22,6 @@ public class GameManager {
         this.scenes = xmlParser.parseCardsXML();
         this.locationManager = new LocationManager(gameBoard, this);
         this.guiController = new GuiController(scenes, gameBoard.getLocations());
-        //this.turnManager = new TurnManager(guiController, locationManager, players);
     }
 
     public int getNumDays(){
@@ -73,31 +73,25 @@ public class GameManager {
 
         setupGame();
         end_game = false;
-        
-        while(!end_game){
-            playDay();
-            num_days--;
-            if(num_days == 0){
-                end_game = true;
-            }
-        }
-        scorePlayers();
      }
 
-    /*
-     * playDay()
-     * execute one in-game day
-     */
-    private void playDay(){
-        while((gameBoard.getNumActiveScenes() > 1) && (end_game == false)){
-            //textController.newDay(players.get(current_player_index).getPlayerID(), num_days, gameBoard.getNumActiveScenes());
-            //end_game = turnManager.conductTurn(players.get(current_player_index));
 
+
+    private void checkGameStatus(){
+        if(num_days == 0 || turn.gameOver() == true){ // game over
+            scorePlayers();
+            // TODO end game
+        } else if(gameBoard.getNumActiveScenes() <= 1){ // day over
+            num_days--;
+            //TODO move players
+        } else if(turn.turnActive() == false){ // turn over
             if(current_player_index == (players.size() - 1)){
                 current_player_index = 0;
             } else {
                 current_player_index++;
             }
+            turn = new Turn(players.get(current_player_index));
+            //TODO update info
         }
     }
 
@@ -151,6 +145,9 @@ public class GameManager {
 
         //Starting player
         current_player_index = 0;
+
+        this.turn = new Turn(players.get(current_player_index));
+        this.turnManager = new TurnManager(guiController, locationManager, turn);
     }
 
     //Sets up a new day
@@ -177,7 +174,6 @@ public class GameManager {
         //textController.listWinners(winners);
     }
 
-    
     /*
      * Rolls X dice and returns an int[] of the generate rolls 
      */
