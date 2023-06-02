@@ -84,7 +84,7 @@ public class GameManager {
             scorePlayers();
             System.exit(0);
             
-        } else if(gameBoard.getNumActiveScenes() <= 1){ // day over
+        } else if(gameBoard.getNumActiveScenes() <= 9){ // day over
             num_days--;
             setupDay();
             guiController.displayMessage("Days Remaining", Integer.toString(num_days)); //Days remaining popup
