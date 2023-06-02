@@ -152,6 +152,10 @@ public class GuiController {
     public void actAction(){
         turnManager.actRoleAction();
     }
+
+    public void rehearseAction(){
+        //implement
+    }
     
     public void takeRoleAction(){
         ArrayList<Role> roles = turnManager.getAvailableRoles();
