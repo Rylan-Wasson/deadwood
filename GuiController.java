@@ -120,12 +120,21 @@ public class GuiController {
         view.displayMessage(title, message);
     }
 
+    public void diplayInConsole(String output){
+        view.printOutput("output");
+    }
+
     //Ends the game and scores the players
     public void endGame(){
         int result = JOptionPane.showConfirmDialog(view, "Are you sure?", "End Game", JOptionPane.YES_NO_OPTION);
         if(result == JOptionPane.YES_OPTION){
             turnManager.endGameAction();
         }
+    }
+    public void moveAction(){
+        //get list of valid locations
+        //signal popup & wait for choice
+        //updated turn is     
     }
 
     public void endTurn(){
