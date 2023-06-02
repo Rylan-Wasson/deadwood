@@ -131,8 +131,18 @@ public class GuiController {
             turnManager.endGameAction();
         }
     }
-
     
+    public void moveAction(){
+        //get list of valid locations
+        ArrayList<String> adjacent_locations = new ArrayList<String>();
+        adjacent_locations.add("Hotel");
+        //signal popup & wait for choice
+        String choice = view.displayLocations(adjacent_locations);
+        displayInConsole(choice);
+        //updated turn is    
+    }
+ 
+
     public void endTurn(){
         turnManager.endTurnAction();
     }

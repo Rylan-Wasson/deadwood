@@ -1,5 +1,7 @@
 import java.awt.*;
 import javax.swing.*;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class BoardView extends JFrame{
@@ -298,6 +300,11 @@ public class BoardView extends JFrame{
         String img = "./Images/"+COLORS[ID-1]+""+ level+".png";
         ImageIcon icon =  new ImageIcon(img);
         player.setIcon(icon);
+    }
+
+    public String displayLocations(ArrayList<String> locations){
+        String choice = (String) JOptionPane.showInputDialog(null, "Choose location", "Valid Locations", JOptionPane.QUESTION_MESSAGE, null, locations.toArray(), locations.get(0));
+        return choice;
     }
 
     /* Accessors */

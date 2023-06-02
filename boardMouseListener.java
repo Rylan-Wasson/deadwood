@@ -18,6 +18,7 @@ public class boardMouseListener implements MouseListener{
 
         } else if(e.getSource() == view.getbMove()){
             view.printOutput("Move Selected");
+            controller.moveAction();
 
         } else if(e.getSource() == view.getbRehearse()){
             view.printOutput("Rehearse Selected");
