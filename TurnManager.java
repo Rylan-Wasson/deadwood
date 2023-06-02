@@ -110,6 +110,7 @@ public class TurnManager {
                     lm.decrementNumScenes();
                     
                 }
+                turn.turnEnd();
                 gm.checkGameStatus();
                 controller.updatePlayerInfo(active_player);
             }
@@ -140,5 +141,22 @@ public class TurnManager {
         int ID = turn.getActivePlayer().getPlayerID();
         ArrayList<String> adj_locations = lm.getLocationByID(ID).getAdjacentLocations();
         return adj_locations;
+    }
+
+    public ArrayList<Role> getAvailableRoles(){
+        Player player = turn.getActivePlayer();
+        Location location = lm.getLocationByID(player.getPlayerID());
+        if(location instanceof Set){ // check if location is a set
+            Set set = (Set) location;
+            if(set.getScene() != null){ // check for an active scene
+                ArrayList<Role> ret_list = set.getExtraRoles(); // combine all roles into a set, return
+                ret_list.addAll(set.getScene().getRoles());
+                return ret_list;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
     }
 }
