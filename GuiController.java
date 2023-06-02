@@ -120,7 +120,7 @@ public class GuiController {
         view.displayMessage(title, message);
     }
 
-    public void diplayInConsole(String output){
+    public void displayInConsole(String output){
         view.printOutput("output");
     }
 
@@ -131,12 +131,8 @@ public class GuiController {
             turnManager.endGameAction();
         }
     }
-    public void moveAction(){
-        //get list of valid locations
-        //signal popup & wait for choice
-        //updated turn is     
-    }
 
+    
     public void endTurn(){
         turnManager.endTurnAction();
     }
