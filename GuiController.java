@@ -121,7 +121,7 @@ public class GuiController {
     }
 
     public void displayInConsole(String output){
-        view.printOutput("output");
+        view.printOutput(output);
     }
 
     //Ends the game and scores the players
@@ -131,14 +131,17 @@ public class GuiController {
             turnManager.endGameAction();
         }
     }
-    
+
     public void moveAction(){
         //get list of valid locations
-        ArrayList<String> adjacent_locations = new ArrayList<String>();
-        adjacent_locations.add("Hotel");
+        ArrayList<String> adjacent_locations = turnManager.getAdjacentLocations();
         //signal popup & wait for choice
         String choice = view.displayLocations(adjacent_locations);
-        displayInConsole(choice);
+        if(choice != null){
+            turnManager.moveAction(choice);
+        } else {
+            displayInConsole("Nothing selected");
+        }
         //updated turn is    
     }
  

@@ -303,7 +303,7 @@ public class BoardView extends JFrame{
     }
 
     public String displayLocations(ArrayList<String> locations){
-        String choice = (String) JOptionPane.showInputDialog(null, "Choose location", "Valid Locations", JOptionPane.QUESTION_MESSAGE, null, locations.toArray(), locations.get(0));
+        String choice = (String) JOptionPane.showInputDialog(this, "Choose location", "Valid Locations", JOptionPane.QUESTION_MESSAGE, null, locations.toArray(), locations.get(0));
         return choice;
     }
 
