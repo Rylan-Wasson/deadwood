@@ -7,14 +7,9 @@ import javax.swing.JOptionPane;
 public class GuiController {
     private BoardView view = null;
     private boardMouseListener listener;
-
-    //TODO: fix constructor and remove GM
-    private GameManager gameManager;
-
     private TurnManager turnManager;
 
-    public GuiController(ArrayList<Scene> scenes, ArrayList<Location> locations, GameManager gameManager){
-        this.gameManager = gameManager;
+    public GuiController(ArrayList<Scene> scenes, ArrayList<Location> locations){
         listener = new boardMouseListener(this);
         view = new BoardView(listener);
         listener.setView(view);
@@ -38,7 +33,7 @@ public class GuiController {
     private void createCovers(ArrayList<Location> locations){
         for(int i = 0; i < locations.size(); i++){
             Location location = locations.get(i);
-            view.addCoverCard(location.getName());
+            view.buildCoverCard(location.getName());
         }
     }
 

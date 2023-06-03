@@ -116,7 +116,7 @@ public class XmlParser {
                             break;
                     }
                 } // set children 
-                Collections.sort(shot_counters, Comparator.comparing(ShotCounter::getNum)); //TODO untested 
+                Collections.sort(shot_counters, Comparator.comparing(ShotCounter::getNum));
                 Set set = new Set(name, adjacent_locations, shot_counters, max_shot_counters, extra_roles, sx, sy, sw, sh);
                 locations.add(set);
             } // sets

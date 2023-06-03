@@ -2,15 +2,26 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class GameBoard {
+    private static GameBoard gameBoard = null;
     private int numActiveScenes;
     private ArrayList<Location> locations;
 
-    public GameBoard(ArrayList<Location> locations){
-        this.locations = locations;
+    private GameBoard(){
+    }
+
+    public static GameBoard getInstance(){
+        if(gameBoard == null){
+            gameBoard = new GameBoard();
+        }
+        return gameBoard;
     }
 
     public int getNumActiveScenes(){
         return this.numActiveScenes;
+    }
+
+    public void setLocations(ArrayList<Location> locations){
+        this.locations = locations;
     }
 
     public void setNumScenes(int numScenes){

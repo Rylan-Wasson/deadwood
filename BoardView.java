@@ -165,6 +165,9 @@ public class BoardView extends JFrame{
         JLabel cardlabel = new JLabel();
         ImageIcon cIcon =  new ImageIcon("./Images/"+img);
         cardlabel.setIcon(cIcon); 
+        cardlabel.setBounds(0, 0, cardlabel.getIcon().getIconWidth(), cardlabel.getIcon().getIconHeight());
+        cardlabel.setVisible(false);
+        bPane.add(cardlabel, (Integer) 1);
         cards.put(img, cardlabel);
     }
 
@@ -172,15 +175,17 @@ public class BoardView extends JFrame{
     public void putCard(String name, int x, int y){
         JLabel label = cards.get(name);
         label.setBounds(x, y, label.getIcon().getIconWidth(), label.getIcon().getIconHeight());
-        label.setOpaque(true);
-        bPane.add(label, (Integer) 1);
+        label.setVisible(true);
     }
 
     // create cover card object, mapped to desired location by name
-    public void addCoverCard(String name){
+    public void buildCoverCard(String name){
         JLabel cardlabel = new JLabel();
         ImageIcon cIcon =  new ImageIcon(COVER_IMG);
-        cardlabel.setIcon(cIcon); 
+        cardlabel.setIcon(cIcon);
+        cardlabel.setBounds(0, 0, cardlabel.getIcon().getIconWidth(), cardlabel.getIcon().getIconHeight());
+        cardlabel.setVisible(false);
+        bPane.add(cardlabel, (Integer) 2); 
         covers.put(name, cardlabel);
        
     }
@@ -190,7 +195,6 @@ public class BoardView extends JFrame{
         JLabel label = covers.get(name);
         label.setBounds(x, y, label.getIcon().getIconWidth(), label.getIcon().getIconHeight());
         label.setVisible(true);
-        bPane.add(label, (Integer) 2);
     }
 
     // update player info label with given stats
@@ -201,7 +205,7 @@ public class BoardView extends JFrame{
     // remove card of given name from pane
     public void removeCard(String name){
         JLabel label = cards.get(name);
-        bPane.remove(label);
+        label.setVisible(false);
     }
 
     // remove cover of given name from pane (location name)
@@ -257,8 +261,7 @@ public class BoardView extends JFrame{
 
     public String getPlayerCount(){
         String input = JOptionPane.showInputDialog(boardlabel, "Enter player count", "Player count", JOptionPane.QUESTION_MESSAGE);
-
-        //TODO: Better error handling here
+        
         if(input == null){
             System.exit(-1);
         }

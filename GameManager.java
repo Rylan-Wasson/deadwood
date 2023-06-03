@@ -1,8 +1,6 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-import javax.swing.plaf.metal.MetalBorders.PaletteBorder;
-
 public class GameManager {
     private int num_days;
     private int num_players;
@@ -13,17 +11,17 @@ public class GameManager {
     private GuiController guiController;
     private LocationManager locationManager;
     private TurnManager turnManager;
-    private boolean end_game;
     private ArrayList<Scene> scenes;
     private int current_player_index;
     private Turn turn;
 
     public GameManager(){
         this.xmlParser = new XmlParser();
-        this.gameBoard = new GameBoard(xmlParser.parseBoardXML());
+        this.gameBoard = GameBoard.getInstance();
+        gameBoard.setLocations(xmlParser.parseBoardXML());
         this.scenes = xmlParser.parseCardsXML();
         this.locationManager = new LocationManager(gameBoard, this);
-        this.guiController = new GuiController(scenes, gameBoard.getLocations(), this);
+        this.guiController = new GuiController(scenes, gameBoard.getLocations());
     }
 
     public int getNumDays(){
@@ -76,7 +74,6 @@ public class GameManager {
 
         //update the player info label
         guiController.updatePlayerInfo(turn.getActivePlayer());
-        end_game = false;
      }
 
 
@@ -114,8 +111,6 @@ public class GameManager {
      * Sets up the game, utilizes the GuiController to recieve input
      */
     public void setupGame(){
-
-        
         guiController.buildShots(gameBoard.getLocations());
         // Creates all the players based on player count, adds them to the players LinkedList
         for(int i = 1; i <= num_players; i++){
@@ -144,10 +139,6 @@ public class GameManager {
         switch(num_players){
             case 2:
                 setNumDays(3);
-                
-                //TODO: REMOVE AFTER TESTING
-                players.get(0).setCash(100);
-                players.get(0).setCredits(100);
                 break;
             case 3:
                 setNumDays(3);
