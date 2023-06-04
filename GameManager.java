@@ -83,7 +83,7 @@ public class GameManager {
             scorePlayers();
             System.exit(0);
             
-        } else if(gameBoard.getNumActiveScenes() <= 9){ // day over
+        } else if(gameBoard.getNumActiveScenes() <= 1){ // day over
             num_days--;
             if(num_days == 0){ // game over
                 scorePlayers();
