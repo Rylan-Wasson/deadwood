@@ -60,30 +60,6 @@ public class BoardView extends JFrame{
         // Set the size of the GUI
         setSize(icon.getIconWidth()+300,icon.getIconHeight()+200);
 
-        // Add a scene card to this room
-        // cardlabel = new JLabel();
-        // ImageIcon cIcon =  new ImageIcon("./Images/01.png");
-        // cardlabel.setIcon(cIcon); 
-        // cardlabel.setBounds(20,65,cIcon.getIconWidth()+2,cIcon.getIconHeight());
-        // System.out.println(cIcon.getIconHeight());
-        // cardlabel.setOpaque(true);
-
-        // Add the card to the lower layer
-        // bPane.add(cardlabel, (Integer) 1);
-
-
-
-
-        // Add a dice to represent a player. 
-        // Role for Crusty the prospector. The x and y co-ordiantes are taken from Board.xml file
-        // playerlabel = new JLabel();
-        // ImageIcon pIcon = new ImageIcon("./Images/r2.png");
-        // playerlabel.setIcon(pIcon);
-        // //playerlabel.setBounds(114,227,pIcon.getIconWidth(),pIcon.getIconHeight());  
-        // playerlabel.setBounds(114,227,46,46);
-        // playerlabel.setVisible(true);
-        // bPane.add(playerlabel,(Integer) 3);
-
         // Create the Menu for action buttons
 
         mLabel = new JLabel("Actions");
