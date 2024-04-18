@@ -9,8 +9,7 @@ You're a hardworking bit actor in this board game about making cowboy movies. Sa
 ![alt text](image.png)
 
 The game is built in Java, and utilizes the Java Swing library for the GUI.
-The full set of rules can be viewed here: 
-[text](Deadwood-Rules.pdf)
+The full set of rules can be viewed [here](Deadwood-Rules.pdf)
 
 # Running the Game
 First, ensure you have a recent version of Java installed
